@@ -11,11 +11,17 @@ const AuthForm = props => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
+      <div>
           <label htmlFor="username">
             <small>Username</small>
           </label>
           <input name="username" type="text" />
+        </div>
+        <div>
+          <label htmlFor="email">
+            <small>Email</small>
+          </label>
+          <input name="email" type="email" />
         </div>
         <div>
           <label htmlFor="password">
@@ -51,7 +57,8 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.auth.error
+    error: state.auth.error,
+    cart: state.cart
   }
 }
 
@@ -62,7 +69,7 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
+      dispatch(authenticate(username, password, formName, this.props.cart))
     }
   }
 }

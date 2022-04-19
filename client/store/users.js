@@ -1,43 +1,41 @@
+//ADMIN ONLY ACCESS!!!!!!!!!!!!
+
 import axios from 'axios'
+import {setError} from './error'
 import history from '../history'
 
 const TOKEN = 'token'
-
-/**
- * ACTION TYPES
- */
-const SET_AUTH = 'SET_AUTH'
+const GET_USERS = 'GET_USERS'
 
 /**
  * ACTION CREATORS
  */
-const setAuth = auth => ({type: SET_AUTH, auth})
+const getUsers = users => ({type: GET_USERS, users})
 
 /**
  * THUNK CREATORS
  */
-export const me = () => async dispatch => {
+export const fetchUsers = () => async dispatch => {
   const token = window.localStorage.getItem(TOKEN)
+  //VERIFY AUTHORIZATION WITH TOKEN
   if (token) {
-    const res = await axios.get('/auth/me', {
+    try{const res = await axios.get('/auth/me', {
       headers: {
         authorization: token
       }
-    })
-    return dispatch(setAuth(res.data))
+    })}
+    catch(err){
+        setError(err)
+    }
+    if (res.data.role ==="Admin"){
+        const res2 =  await axios.get('/api/users')
+        return
+    }
     //returns data of whatever user matches our token's id/authorization
     //if user is a logged in customer then returns customer's data
     //if user is logged in as
-  }
-}
-//if method is sign up then it passes along the current store to initialize db for the user
-export const authenticate = (username, password, method, cart = {}) => async dispatch => {
-  try {
-    const res = await axios.post(`/auth/${method}`, {username, password, cart})
-    window.localStorage.setItem(TOKEN, res.data.token)
-    dispatch(me())
-  } catch (authError) {
-    return dispatch(setAuth({error: authError}))
+  } else{
+      console.log("ERROR TOKEN")
   }
 }
 
