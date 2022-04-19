@@ -1,47 +1,54 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { logout } from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+const Navbar = ({ handleClick, isLoggedIn }) => (
+	<div>
+		<h1>GraceShopper</h1>
+		<nav>
+			<Link to="/products" className="Nav-Products">
+				Products
+			</Link>
+			<div className="cart">
+				<Link to="/cart">Cart</Link>
+			</div>
+		</nav>
+		<hr />
+	</div>
 )
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+export default Navbar //connect(mapState, mapDispatch)(Navbar)
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+// {isLoggedIn ? (
+//   <div>
+//     {/* The navbar will show these links after you log in */}
+//     <Link to="/home">Home</Link>
+//     <a href="#" onClick={handleClick}>
+//       Logout
+//     </a>
+//   </div>
+// ) : (
+//   <div>
+//     {/* The navbar will show these links before you log in */}
+//     <Link to="/login">Login</Link>
+//     <Link to="/signup">Sign Up</Link>
+//   </div>
+// )}
 
-export default connect(mapState, mapDispatch)(Navbar)
+// /**
+//  * CONTAINER
+//  */
+// const mapState = state => {
+//   return {
+//     isLoggedIn: !!state.auth.id
+//   }
+// }
+
+// const mapDispatch = dispatch => {
+//   return {
+//     handleClick() {
+//       dispatch(logout())
+//     }
+//   }
+// }
