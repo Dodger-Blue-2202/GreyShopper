@@ -18,7 +18,6 @@ export const Home = props => {
  * CONTAINER
  */
 const mapState = state => {
-  console.log("Logs",state.auth)
   return {
     username: state.auth.username,
     isAdmin: state.auth.isAdmin
