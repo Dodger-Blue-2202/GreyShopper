@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
 const Product = require("./Product");
+const Order = require("./Order");
 
 const SALT_ROUNDS = 5;
 
@@ -19,7 +20,7 @@ const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique:true,
+    unique: true,
     validate: {
       isEmail: true,
       notEmpty: true,
@@ -64,11 +65,20 @@ User.authenticate = async function ({ username, password }) {
 User.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
-    const user = await User.findByPk(id,{
-      include: [{// Notice `include` takes an ARRAY
-        model: Product
-      },],
-      attributes:{exclude: ['password']}
+    console.log("id is ", id);
+    const user = await User.findByPk(id, {
+      include: [
+        {
+          //   // Notice `include` takes an ARRAY
+          model: Order,
+          include: [
+            {
+              model: Product,
+            },
+          ],
+        },
+      ],
+      attributes: { exclude: ["password"] },
     });
     if (!user) {
       throw "nooo";
