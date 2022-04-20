@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product },
+  models: { User, Product, Order },
 } = require("../server/db");
 
 const users = [
@@ -94,16 +94,7 @@ const products = [
   },
 ];
 
-const orders = [
-  {
-    quantity: 2,
-    total_price: 598,
-  },
-  {
-    quantity: 1,
-    total_price: 3000,
-  },
-];
+const orders = [{ userId: 1 }, { userId: 2 }, { userId: 3 }, { userId: 4 }];
 
 /**
  * seed - this function clears the database, updates tables to
@@ -113,29 +104,36 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating Products
-  // const newProducts = await Promise.all(
-  //   products.map((product) => Product.create(product))
-  // );
-  await Promise.all(products.map((product) => Product.create(product)));
-
-  // Creating Users
+  //Creating Users
   await Promise.all(
-    users.map((user) => User.create(user))
-    // users.map((user) => {
-    //   User.create(user);
-    // const newUser = await User.create(user);
-    // let product = newProducts[Math.floor(Math.random() * newProducts.length)];
-    // await newUser.addProduct(product, { through: { quantity: 1 } });
-    // let secondProduct =
-    //   newProducts[Math.floor(Math.random() * newProducts.length)];
-    // await newUser.addProduct(secondProduct, {
-    //   through: { quantity: Math.floor(Math.random() * 5) },
-    // });
-    // })
+    users.map(async (user) => {
+      await User.create(user);
+    })
   );
 
-  console.log(`seeded ${users.length} users and ${products.length} products`);
+  //Creating Orders
+  const newOrders = await Promise.all(
+    orders.map((order) => Order.create(order))
+  );
+
+  // Creating Products
+  await Promise.all(
+    products.map(async (product) => {
+      const newProduct = await Product.create(product);
+      let order = newOrders[Math.floor(Math.random() * newOrders.length)];
+      await newProduct.addOrder(order, {
+        through: {
+          quantity: 1,
+          total_price: product.price,
+          isCart: Math.random() > 0.5,
+        },
+      });
+    })
+  );
+
+  console.log(
+    `seeded ${users.length} users, ${products.length} products and ${orders.length} orders.`
+  );
   console.log(`seeded successfully`);
 }
 

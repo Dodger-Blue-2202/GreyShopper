@@ -31,6 +31,7 @@ const Order_Product = db.define("Order_Product", {
 
 Product.belongsToMany(Order, { through: Order_Product });
 Order.belongsTo(User);
+User.hasMany(Order);
 
 module.exports = {
   db,
