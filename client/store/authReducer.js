@@ -24,13 +24,18 @@ export const me = () => async dispatch => {
         authorization: token
       }
     })
+    console.log(res.data)
     return dispatch(setAuth(res.data))
+    //returns data of whatever user matches our token's id/authorization
+    //if user is a logged in customer then returns customer's data
+    //if user is logged in as
   }
 }
-
-export const authenticate = (username, password, method) => async dispatch => {
+//if method is sign up then it passes along the sign up email and current store to initialize db for the user
+// if its log in then those two values aren't needed 
+export const authenticate = (username, password, method, email = "", cart = {}) => async dispatch => {
   try {
-    const res = await axios.post(`/auth/${method}`, {username, password})
+    const res = await axios.post(`/auth/${method}`, {username, password, email, cart})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
   } catch (authError) {
@@ -53,7 +58,8 @@ export const logout = () => {
 export default function(state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
-      return action.auth
+      console.log(action.auth)
+      return action.auth //will set user and "isAdmin"
     default:
       return state
   }

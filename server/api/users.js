@@ -4,6 +4,18 @@ const {
 } = require("../db");
 module.exports = router;
 
+router.use("/", async (req,res,next)=>{
+  try {
+    console.log(req.headers.authorization)
+    const isAdmin = await User.checkAdminAccess(req.headers.authorization)
+    if (!isAdmin){
+      throw "Does not have correct authorization"
+    }
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
 // this is /api/users
 router.get("/", async (req, res, next) => {
   try {

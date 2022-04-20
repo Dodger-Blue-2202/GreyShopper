@@ -7,16 +7,27 @@ import {authenticate} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
+  const renderEmail = () => {
+    if (name==="signup"){
+      return(
+      <div>
+        <label htmlFor="email">
+          <small>Email</small>
+        </label>
+        <input name="email" type="email" />
+      </div>
+    )}
+  }
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
+      <div>
           <label htmlFor="username">
             <small>Username</small>
           </label>
           <input name="username" type="text" />
         </div>
+        {renderEmail()}
         <div>
           <label htmlFor="password">
             <small>Password</small>
@@ -51,7 +62,8 @@ const mapSignup = state => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.auth.error
+    error: state.auth.error,
+    // cart: state.cart
   }
 }
 
@@ -62,7 +74,13 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
+      let email = ""
+      if (evt.target.email){
+        email = evt.target.email.value
+      }
+      dispatch(authenticate(username, password, formName, email
+        // this.props.cart
+        ))
     }
   }
 }
