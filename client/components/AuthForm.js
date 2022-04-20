@@ -51,7 +51,6 @@ const AuthForm = props => {
  *   can stay DRY with interfaces that are very similar to each other!
  */
 const mapLogin = state => {
-  console.log("test",state.auth)
   return {
     name: 'login',
     displayName: 'Login',
@@ -60,7 +59,6 @@ const mapLogin = state => {
 }
 
 const mapSignup = state => {
-  console.log("test",state)
   return {
     name: 'signup',
     displayName: 'Sign Up',
