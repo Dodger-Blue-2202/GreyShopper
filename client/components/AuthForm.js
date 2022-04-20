@@ -7,7 +7,17 @@ import {authenticate} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
+  const renderEmail = () => {
+    if (name==="signup"){
+      return(
+      <div>
+        <label htmlFor="email">
+          <small>Email</small>
+        </label>
+        <input name="email" type="email" />
+      </div>
+    )}
+  }
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -17,12 +27,7 @@ const AuthForm = props => {
           </label>
           <input name="username" type="text" />
         </div>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="email" />
-        </div>
+        {renderEmail()}
         <div>
           <label htmlFor="password">
             <small>Password</small>
@@ -46,6 +51,7 @@ const AuthForm = props => {
  *   can stay DRY with interfaces that are very similar to each other!
  */
 const mapLogin = state => {
+  console.log("test",state.auth)
   return {
     name: 'login',
     displayName: 'Login',
@@ -54,11 +60,12 @@ const mapLogin = state => {
 }
 
 const mapSignup = state => {
+  console.log("test",state)
   return {
     name: 'signup',
     displayName: 'Sign Up',
     error: state.auth.error,
-    cart: state.cart
+    // cart: state.cart
   }
 }
 
@@ -69,7 +76,13 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName, this.props.cart))
+      let email = ""
+      if (evt.target.email){
+        email = evt.target.email.value
+      }
+      dispatch(authenticate(username, password, formName, email
+        // this.props.cart
+        ))
     }
   }
 }
