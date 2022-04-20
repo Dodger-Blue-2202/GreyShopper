@@ -21,6 +21,11 @@ form div {
 }
 
 nav {
+	background-color: aquamarine;
+}
+
+nav link {
+	font-size: large;
 }
 
 .cart {

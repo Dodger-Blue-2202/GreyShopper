@@ -21,18 +21,11 @@ export const Home = (props) => {
 /**
  * CONTAINER
  */
-<<<<<<< HEAD
 const mapState = (state) => {
 	return {
 		username: state.auth.username,
+		isAdmin: state.auth.isAdmin,
 	}
-=======
-const mapState = state => {
-  return {
-    username: state.auth.username,
-    isAdmin: state.auth.isAdmin
-  }
->>>>>>> 9ff3064411536742853bb7e491965141006ada39
 }
 
 export default connect(mapState)(Home)

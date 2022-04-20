@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../store'
+import Cart from '../../public/images/cart.svg'
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
 	<div>
@@ -13,7 +14,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 			<div className="cart">
 				<Link to="/signup">Sign Up</Link>
 				<Link to="/login">Log in</Link>
-				<Link to="/cart">Cart</Link>
+				<Link to="/cart">
+					<img src={Cart} />
+				</Link>
 			</div>
 		</nav>
 		<hr />
