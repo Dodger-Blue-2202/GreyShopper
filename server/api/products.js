@@ -1,8 +1,19 @@
 const router = require("express").Router();
 const {
-  models: { Product },
+  models: { Product,User },
 } = require("../db");
 module.exports = router;
+
+router.use("/", async (req,res,next)=>{
+  try {
+    const isAdmin = await User.checkAdminAccess(req.headers.authorization)
+    if (!isAdmin){
+      throw "Does not have correct authorization"
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 // this is /api/products
 router.get("/", async (req, res, next) => {

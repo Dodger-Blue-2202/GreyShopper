@@ -3,6 +3,7 @@ const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
+const Product = require("./Product");
 
 const SALT_ROUNDS = 5;
 
@@ -18,6 +19,7 @@ const User = db.define("user", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique:true,
     validate: {
       isEmail: true,
       notEmpty: true,
@@ -62,11 +64,16 @@ User.authenticate = async function ({ username, password }) {
 User.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
+    const user = await User.findByPk(id,{
+      include: [{// Notice `include` takes an ARRAY
+        model: Product
+      },],
+      attributes:{exclude: ['password']}
+    });
     if (!user) {
       throw "nooo";
     }
-    return user;
+    return user; //or return both id and isadmin?
   } catch (ex) {
     const error = Error("bad token");
     error.status = 401;
@@ -74,6 +81,16 @@ User.findByToken = async function (token) {
   }
 };
 
+User.checkAdminAccess = async function (token) {
+  try {
+    const { isAdmin } = await jwt.verify(token, process.env.JWT);
+    return isAdmin; //or return both id and isadmin?
+  } catch (ex) {
+    const error = Error("bad token");
+    error.status = 401;
+    throw error;
+  }
+};
 /**
  * hooks
  */
