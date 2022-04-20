@@ -34,63 +34,74 @@ const users = [
 const products = [
   {
     name: "Hair Brush",
-    price: 4.0,
+    price: 400,
     description: "Brushes more than one hair at a time!",
     stock: 7,
   },
   {
     name: "A Single Spoon",
-    price: 42000.0,
+    price: 4200000,
     description: "This is the best spoon.",
-    stock: 7,
+    stock: 1,
   },
   {
     name: "Two Spoons",
-    price: 0.01,
+    price: 1,
     description: "Almost worthless.",
     stock: 43,
   },
   {
     name: "Coat Hanger",
-    price: 1.0,
+    price: 100,
     description: "Hang your clothes on this.",
     stock: 7,
   },
   {
     name: "Coffee Beans",
-    price: 8.0,
+    price: 800,
     description: "Questionably sourced.",
     stock: 13,
   },
   {
     name: "Chode Jeans",
-    price: 40.0,
+    price: 4000,
     description: "Size 54 waist, 10 inch legs. They're junk.",
     stock: 2,
   },
   {
     name: "Black T-Shirt",
-    price: 10.0,
+    price: 1000,
     description: "It's got 4 holes of various sizes, figure it out.",
     stock: 3,
   },
   {
     name: "White T-Shirt",
-    price: 10.0,
+    price: 1000,
     description: "Comes pre-stained",
     stock: 3,
   },
   {
     name: "Pair of Shoes",
-    price: 30.0,
+    price: 3000,
     description: "We won't tell you the size or brand. You feeling lucky?",
     stock: 7,
   },
   {
     name: "One Sock",
-    price: 2.99,
+    price: 299,
     description: "We sell them like this so you have to buy two.",
     stock: 9,
+  },
+];
+
+const orders = [
+  {
+    quantity: 2,
+    total_price: 598,
+  },
+  {
+    quantity: 1,
+    total_price: 3000,
   },
 ];
 
@@ -103,22 +114,25 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Products
-  const newProducts = await Promise.all(
-    products.map((product) => Product.create(product))
-  );
+  // const newProducts = await Promise.all(
+  //   products.map((product) => Product.create(product))
+  // );
+  await Promise.all(products.map((product) => Product.create(product)));
 
   // Creating Users
   await Promise.all(
-    users.map(async (user) => {
-      const newUser = await User.create(user);
-      let product = newProducts[Math.floor(Math.random() * newProducts.length)];
-      await newUser.addProduct(product, { through: { quantity: 1 } });
-      let secondProduct =
-        newProducts[Math.floor(Math.random() * newProducts.length)];
-      await newUser.addProduct(secondProduct, {
-        through: { quantity: Math.floor(Math.random() * 5) },
-      });
-    })
+    users.map((user) => User.create(user))
+    // users.map((user) => {
+    //   User.create(user);
+    // const newUser = await User.create(user);
+    // let product = newProducts[Math.floor(Math.random() * newProducts.length)];
+    // await newUser.addProduct(product, { through: { quantity: 1 } });
+    // let secondProduct =
+    //   newProducts[Math.floor(Math.random() * newProducts.length)];
+    // await newUser.addProduct(secondProduct, {
+    //   through: { quantity: Math.floor(Math.random() * 5) },
+    // });
+    // })
   );
 
   console.log(`seeded ${users.length} users and ${products.length} products`);
