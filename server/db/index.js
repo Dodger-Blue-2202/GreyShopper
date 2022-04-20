@@ -5,22 +5,40 @@ const Sequelize = require("sequelize");
 
 const User = require("./models/User");
 const Product = require("./models/Product");
+const Order = require("./models/Order");
 
-const User_Product = db.define("User_Product", {
+const Order_Product = db.define("Order_Product", {
   quantity: {
     type: Sequelize.INTEGER,
     validate: {
       min: 0,
     },
   },
+  total_price: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0,
+    },
+  },
+  isCart: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+    validate: {
+      notEmpty: true,
+    },
+  },
 });
-Product.belongsToMany(User, { through: User_Product });
-User.belongsToMany(Product, { through: User_Product });
+
+Product.belongsToMany(Order, { through: Order_Product });
+Order.belongsToMany(Product, { through: Order_Product });
+Order.belongsTo(User);
+User.hasMany(Order);
 
 module.exports = {
   db,
   models: {
     User,
     Product,
+    Order,
   },
 };
