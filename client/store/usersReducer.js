@@ -1,50 +1,93 @@
 //ADMIN ONLY ACCESS!!!!!!!!!!!!
 
 import axios from 'axios'
-import {setError} from './error'
+import {setError} from './errorReducer'
 import history from '../history'
 
 const TOKEN = 'token'
 const SET_USERS = 'SET_USERS'
-
+const REMOVE_USER = 'REMOVE_USER'
+const ADD_USER = 'ADD_USER'
+const EDIT_USER = 'EDIT_USER'
 /**
  * ACTION CREATORS
  */
 const setUsers = users => ({type: SET_USERS, users})
-
+const removeUser = userId => ({type: REMOVE_USER, userId})
+const addUser = user => ({type: ADD_USER, user})
+const editUser = user => ({type: EDIT_USER, user})
 /**
  * THUNK CREATORS
  */
-// const userAuthorization = async (token) =>{
-//     let res = "Guest"
-//     try{
-//       res = await axios.get('/auth/me', {
-//       headers: {
-//         authorization: token
-//       }})
-//       return res
-//     }
-//     catch(err){
-//         setError(err)
-//     }
-// }
-// export const fetchUsers = () => async dispatch => {
-//   const token = window.localStorage.getItem(TOKEN)
-//   //VERIFY AUTHORIZATION WITH TOKEN
-//   if (token) {
-//     let res = userAuthorization(token)
-//     if (res.data.role ==="Admin"){
-//         const res2 =  await axios.get('/api/users')
-//         setUsers(res2.data)
-//     }
-//     //returns data of whatever user matches our token's id/authorization
-//     //if user is a logged in customer then returns customer's data
-//     //if user is logged in as
-//   }
-// }
+export const fetchUsers = () => async dispatch => {
+  const token = window.localStorage.getItem(TOKEN)
+  //VERIFY AUTHORIZATION WITH TOKEN
+  if (token) {
+    try{
+      const res =  await axios.get('/api/users',{headers:{authentication:token}})
+      //returns all users if we have admin access
+      dispatch(setUsers(res.data))
+    }catch(err){
+      dispatch(setError("Error getting user data. Current user might not have admin access"))
+    }
+  }else {
+    dispatch(setError("There isn't a token. No user is logged in."))
+  }
+}
+
+export const deleteUser = (id) => async dispatch => {
+  const token = window.localStorage.getItem(TOKEN)
+  //VERIFY AUTHORIZATION WITH TOKEN
+  if (token) {
+    try{
+      const res =  await axios.delete(`/api/users/:${id}`,{headers:{authentication:token}})
+      //deletes user if we have admin access
+      dispatch(removeUser(res.data)) 
+      //update store
+    }catch(err){
+      dispatch(setError("Error getting user data. Current user might not have admin access"))
+    }
+  }else {
+    dispatch(setError("There isn't a token. No user is logged in."))
+  }
+}
+
+
+export const postUser = (user) => async dispatch => {
+  const token = window.localStorage.getItem(TOKEN)
+  //VERIFY AUTHORIZATION WITH TOKEN
+  if (token) {
+    try{
+      const res =  await axios.post(`/api/users/`,{headers:{authentication:token},body:user})
+      //adds user if we have admin access
+      dispatch(addUser(res.data)) 
+    }catch(err){
+      dispatch(setError("Error getting user data. Current user might not have admin access"))
+    }
+  }else {
+    dispatch(setError("There isn't a token. No user is logged in."))
+  }
+}
+
+export const putUser = (user) => async dispatch => {
+  const token = window.localStorage.getItem(TOKEN)
+  //VERIFY AUTHORIZATION WITH TOKEN
+  if (token) {
+    try{
+      const res =  await axios.put(`/api/users/:${user.id}`,{headers:{authentication:token},body:user})
+      //adds user if we have admin access
+      dispatch(editUser(res.data)) 
+    }catch(err){
+      dispatch(setError("Error getting user data. Current user might not have admin access"))
+    }
+  }else {
+    dispatch(setError("There isn't a token. No user is logged in."))
+  }
+}
+
 
 export const logout = () => {
-  history.push('/login')
+  //clear users state when we log out of admin account
   return {
     type: SET_USERS,
     users: []
@@ -58,7 +101,13 @@ export default function(state = [], action) {
   switch (action.type) {
     case SET_USERS:
       return action.users
-    default:
+    case ADD_USER:
+      return [...state,action.user]
+    case REMOVE_USER:
+      return state.filter((item)=>{return(item.id!==action.id)})
+    case EDIT_USER:
+      return state.map((item)=>{if (item.id===action.user.id){return (action.user)}else{return item}})
+      default:
       return state
   }
 }

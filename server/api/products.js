@@ -4,17 +4,6 @@ const {
 } = require("../db");
 module.exports = router;
 
-router.use("/", async (req,res,next)=>{
-  try {
-    const isAdmin = await User.checkAdminAccess(req.headers.authorization)
-    if (!isAdmin){
-      throw "Does not have correct authorization"
-    }
-  } catch (error) {
-    next(error)
-  }
-})
-
 // this is /api/products
 router.get("/", async (req, res, next) => {
   try {
@@ -35,6 +24,16 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.use("/", async (req,res,next)=>{
+  try {
+    const isAdmin = await User.checkAdminAccess(req.headers.authorization)
+    if (!isAdmin){
+      throw "Does not have correct authorization"
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 // ADMIN ACCESS ONLY BELOW
 // add a product
 router.post("/", async (req, res, next) => {
