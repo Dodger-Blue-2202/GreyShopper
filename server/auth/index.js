@@ -33,3 +33,12 @@ router.get("/me", async (req, res, next) => {
     next(ex);
   }
 });
+//adminaccess route
+router.get("/aa", async (req,res,next)=>{
+  try {
+    //returns boolean of admin access
+    res.send(await User.checkAdminAccess(req.headers.authorization))
+  } catch (error) {
+    next(error)
+  }
+})
