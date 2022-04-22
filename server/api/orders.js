@@ -22,10 +22,11 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//add items to orders
-router.post("/", async (req, res, next) => {
+//add initial item to cart
+// update item amount in cart
+router.post("/products", async (req, res, next) => {
   try {
-    let product = await Product.findByPk(req.body.id);
+    let product = await Product.findByPk(req.body.product.id);
     let user = await User.findByToken(req.headers.authorization);
     // this is the cart
     let order = await Order.findOne({
@@ -35,11 +36,11 @@ router.post("/", async (req, res, next) => {
     if (!order) {
       order = await Order.create(user);
     }
-
+    let qty = req.body.qty || 1;
     await product.addOrder(order, {
       through: {
-        quantity: 1,
-        total_price: product.price,
+        quantity: qty,
+        total_price: product.price * qty,
         isCart: true,
       },
     });
@@ -50,8 +51,8 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-//delete items from orders
-router.delete("/", async (req, res, next) => {
+//delete item from cart
+router.delete("/products", async (req, res, next) => {
   try {
     let product = await Product.findByPk(req.body.id);
     let user = await User.findByToken(req.headers.authorization);
@@ -65,29 +66,6 @@ router.delete("/", async (req, res, next) => {
     });
     await order.destroy();
     res.status(201).send(order);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// update item amount in order
-router.delete("/", async (req, res, next) => {
-  try {
-    let product = req.body;
-    let user = await User.findByToken(req.headers.authorization);
-    // this is the cart
-    const order = await Order_Product.findAll({
-      include: [{ model: Order, where: { userId: user.id } }],
-      where: { isCart: true },
-    });
-    let updatedOrder = await product.addOrder(order, {
-      through: {
-        quantity: 1,
-        total_price: product.price,
-        isCart: true,
-      },
-    });
-    res.status(201).send(updatedOrder);
   } catch (err) {
     next(err);
   }
