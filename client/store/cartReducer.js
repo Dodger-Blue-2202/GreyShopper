@@ -47,7 +47,8 @@ export const removeFromCart = (product) => async (dispatch) => {
   try {
     if (token) {
       await axios.delete(`/api/orders/products`, {
-        headers: { authorization: token, body: product.id },
+        data: product,
+        headers: { authorization: token },
       });
     }
     dispatch(removeFromOrder(product));
@@ -62,7 +63,8 @@ export const addToCart = (product, qty) => async (dispatch) => {
   try {
     if (token) {
       await axios.post(`/api/orders/products`, {
-        headers: { authorization: token, body: { product, qty } },
+        data: { product, qty },
+        headers: { authorization: token },
       });
     }
     dispatch(addToOrder(product));
@@ -77,8 +79,8 @@ export const checkOut = (order) => async (dispatch) => {
   //VERIFY AUTHORIZATION WITH TOKEN
   try {
     await axios.put(`/api/orders/checkout`, {
+      data: order,
       headers: { authorization: token },
-      body: order,
     }); // if token exists in authorization then checkout order by setting isCart to false identified by token
     //Otherwise create an order and add that to order db with null user and checkout
     //then we want to create a new order to fill
@@ -96,8 +98,8 @@ export const signUp = (order) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   try {
     await axios.post(`/api/orders/`, {
+      data: order,
       headers: { authorization: token },
-      body: order,
     }); // signing up will add to the db all the items in your cart
   } catch (err) {
     dispatch(
@@ -125,7 +127,7 @@ export default function (state = [], action) {
       return action.orders;
     case REMOVE_FROM_ORDER:
       return state.filter((item) => {
-        return item.id !== action.product.id;
+        return item.product.id !== action.product.id;
       });
     case ADD_TO_ORDER:
       return [...state, action.product];
