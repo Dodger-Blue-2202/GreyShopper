@@ -22,8 +22,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//add items to orders
-router.post("/", async (req, res, next) => {
+//add initial item to cart
+router.post("/products", async (req, res, next) => {
   try {
     let product = await Product.findByPk(req.body.id);
     let user = await User.findByToken(req.headers.authorization);
@@ -50,8 +50,8 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-//delete items from orders
-router.delete("/", async (req, res, next) => {
+//delete item from cart
+router.delete("/products", async (req, res, next) => {
   try {
     let product = await Product.findByPk(req.body.id);
     let user = await User.findByToken(req.headers.authorization);
@@ -70,8 +70,8 @@ router.delete("/", async (req, res, next) => {
   }
 });
 
-// update item amount in order
-router.delete("/", async (req, res, next) => {
+// update item amount in cart
+router.put("/", async (req, res, next) => {
   try {
     let product = req.body;
     let user = await User.findByToken(req.headers.authorization);
