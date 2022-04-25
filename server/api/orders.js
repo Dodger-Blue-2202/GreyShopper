@@ -100,5 +100,7 @@ router.put("/checkout", async(req,res,next)=>{
     }
   } else{
     //if not logged in then 
+    let orders = req.body;
+    console.log(orders)
   }
 })
