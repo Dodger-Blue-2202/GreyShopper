@@ -1,47 +1,63 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/Home";
-import { me } from "./store";
+import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Login, Signup } from './components/AuthForm'
+import Home from './components/Home'
+import Products from './components/Products'
+import SingleProduct from './components/SingleProduct'
+import { me } from './store'
 import Cart from "./components/Cart";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
-  }
+	componentDidMount() {
+		this.props.loadInitialData()
+	}
 
-  render() {
-    const { isLoggedIn } = this.props;
+	render() {
+		const { isLoggedIn } = this.props
 
-    return (
-      <div>
-        {isLoggedIn ? (
-          <Switch>
-            <Route path="/home" component={Home} />
+		return (
+			<div>
+				{isLoggedIn ? (
+					<Switch>
+						<Route path="/home" component={Home} />
+						<Route exact path="/products" component={Products} /> 
             <Route path="/cart" component={Cart} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+						<Route
+							exact
+							path="/products/:id"
+							component={SingleProduct}
+						/>
+						<Redirect to="/home" />
+					</Switch>
+				) : (
+					<Switch>
+						<Route path="/" exact component={Login} />
+						<Route path="/login" component={Login} />
+						<Route path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
-          </Switch>
-        )}
-      </div>
-    );
-  }
+						<Route
+							exact
+							path="/products/:id"
+							component={SingleProduct}
+						/>
+						<Route exact path="/products" component={Products} />
+					</Switch>
+				)}
+			</div>
+		)
+	}
+
 }
 
 /**
  * CONTAINER
  */
 const mapState = (state) => {
+
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
