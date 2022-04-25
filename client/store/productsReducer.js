@@ -20,7 +20,6 @@ const editProduct = (product) => ({ type: EDIT_PRODUCT, product })
 export const fetchProducts = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/products')
-		//returns all products if we have admin access
 		dispatch(setProducts(res.data))
 	} catch (err) {
 		dispatch(setError('Error getting product data.'))

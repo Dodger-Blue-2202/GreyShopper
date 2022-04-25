@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import Products from "./Products";
-import { Login, Signup } from "./AuthForm";
 
 /**
  * COMPONENT
@@ -13,8 +12,6 @@ export const Home = (props) => {
     <div>
       <h3>Welcome, {username}</h3>
       <Products />
-      {/* <Signup />
-      <Login /> */}
     </div>
   );
 };

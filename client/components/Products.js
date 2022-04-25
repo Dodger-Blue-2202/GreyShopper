@@ -23,7 +23,7 @@ export class Products extends React.Component {
 						</div>
 						<div className="row align-items-center">
 							<h4>Name: {product.name}</h4>
-							<h4>Price: ${product.price / 100}</h4>
+							<h4>Price: ${product.price}</h4>
 							<h4>Description: {product.description}</h4>
 							<h4>Quantity: {product.stock}</h4>
 						</div>
