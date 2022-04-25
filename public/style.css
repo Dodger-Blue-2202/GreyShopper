@@ -1,21 +1,88 @@
 body {
-  font-family: sans-serif;
+	font-family: sans-serif;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 label {
-  display: block;
+	display: block;
 }
 
 nav a {
-  display: inline-block;
-  margin: 1em;
+	display: inline-block;
+	margin: 1em;
 }
 
-form div {
-  margin: 1em;
-  display: inline-block;
+nav {
+	background-color: aquamarine;
+}
+
+nav link {
+	font-size: large;
+}
+
+.products,
+.product {
+	background-image: url('./images/colorfulbackground.jpg');
+	background-image: no-repeat;
+}
+
+.signup {
+	width: 100vw;
+	height: 100vh;
+}
+
+#app > div:nth-child(1) > div:nth-child(2) {
+	background-image: url('./images/colorfulbackground.jpg');
+}
+
+form {
+	margin: 1em;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	background-color: lightgray;
+}
+.login {
+	background-image: url('./images/colorfulbackground.jpg');
+}
+
+.container-fluid {
+	display: flex;
+	justify-content: flex-start;
+	border-style: groove;
+	border-color: black;
+	margin: 10px;
+	background-color: lightblue;
+	border-radius: 10px;
+	max-width: 1200px;
+}
+
+.product-image {
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+	margin-right: 1.5rem;
+	width: 15vw;
+	height: 15vh;
+	border-radius: 10px;
+}
+
+.row-align-items-end {
+	align-self: center;
+}
+.addToCartButton {
+	display: flex;
+	float: right;
+	position: right;
+	align-self: center;
+}
+
+.btn.btn-primary {
+	width: 7rem;
+}
+
+.cart {
+	float: right;
 }
