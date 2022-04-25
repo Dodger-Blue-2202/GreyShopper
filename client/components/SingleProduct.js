@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchSingleProduct } from '../store/productsReducer'
+import { fetchSingleProduct } from '../store/productReducer'
 
 export class SingleProduct extends React.Component {
 	componentDidMount() {
@@ -29,7 +29,7 @@ export class SingleProduct extends React.Component {
 	}
 }
 
-const mapState = (state) => ({ product: state.products })
+const mapState = (state) => ({ product: state.product })
 
 const mapDispatch = (dispatch) => {
 	return {

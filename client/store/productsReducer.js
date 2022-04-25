@@ -4,7 +4,6 @@ import history from '../history'
 
 const TOKEN = 'token'
 const SET_PRODUCTS = 'SET_PRODUCTS'
-const SET_PRODUCT = 'SET_PRODUCT'
 const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
@@ -12,7 +11,6 @@ const EDIT_PRODUCT = 'EDIT_PRODUCT'
  * ACTION CREATORS
  */
 const setProducts = (products) => ({ type: SET_PRODUCTS, products })
-const setProduct = (product) => ({ type: SET_PRODUCT, product })
 const removeProduct = (productId) => ({ type: REMOVE_PRODUCT, productId })
 const addProduct = (product) => ({ type: ADD_PRODUCT, product })
 const editProduct = (product) => ({ type: EDIT_PRODUCT, product })
@@ -28,15 +26,7 @@ export const fetchProducts = () => async (dispatch) => {
 		dispatch(setError('Error getting product data.'))
 	}
 }
-export const fetchSingleProduct = (id) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/products/${id}`)
-		//returns all products if we have admin access
-		dispatch(setProduct(res.data))
-	} catch (err) {
-		dispatch(setError('Error getting product data.'))
-	}
-}
+
 //All of the following routes are admin only
 export const deleteProduct = (id) => async (dispatch) => {
 	const token = window.localStorage.getItem(TOKEN)
@@ -122,8 +112,6 @@ export default function (state = [], action) {
 	switch (action.type) {
 		case SET_PRODUCTS:
 			return action.products
-		case SET_PRODUCT:
-			return action.product
 		case ADD_PRODUCT:
 			return [...state, action.product]
 		case REMOVE_PRODUCT:
