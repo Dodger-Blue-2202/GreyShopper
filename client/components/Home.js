@@ -1,28 +1,31 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react'
+import { connect } from 'react-redux'
+import { Login, Signup } from './AuthForm'
 
 /**
  * COMPONENT
  */
 export const Home = (props) => {
-  const { username } = props;
+	const { username } = props
 
-  return (
-    <div>
-      <h3>Welcome, {username}</h3>
-    </div>
-  );
-};
+	return (
+		<div>
+			<h3>Welcome, {username}</h3>
+			<Products />
+			{/* <Signup />
+      <Login /> */}
+		</div>
+	)
+}
 
 /**
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log(state.auth.isAdmin)
-  return {
-    username: state.auth.username,
-    isAdmin: state.auth.isAdmin,
-  };
-};
+	return {
+		username: state.auth.username,
+		isAdmin: state.auth.isAdmin,
+	}
+}
 
-export default connect(mapState)(Home);
+export default connect(mapState)(Home)
