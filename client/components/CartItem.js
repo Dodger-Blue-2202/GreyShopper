@@ -13,31 +13,17 @@ class CartItem extends React.Component {
   }
 
   componentDidMount() {
-    console.log(
-      "Component mounted. Props is ",
-      this.props,
-      " and state is ",
-      this.state
-    );
     this.setState({
       quantity: this.props.order.quantity,
     });
   }
 
   onDelete() {
-    console.log("onDelete reached. Props before delete is ", this.props);
     this.props.removeFromCart(this.props.product);
-    console.log("Props after delete is ", this.props);
   }
 
   render() {
-    console.log(
-      "Props in render is ",
-      this.props,
-      " and state is ",
-      this.state
-    );
-    const { product, order, updateOrder } = this.props;
+    const { product, updateOrder } = this.props;
     return (
       <div>
         <Link to={`/products/${product.id}`} className="product-link">
@@ -50,33 +36,8 @@ class CartItem extends React.Component {
           <button
             type="button"
             className="decrement"
-            onClick={() => {
-              this.setState({
-                quantity: this.state.quantity - 1,
-              });
-              product.totalPrice = Math.floor(
-                product.price * this.state.quantity
-              );
-              updateOrder(product, this.state.quantity);
-            }}
-          >
-            Up
-          </button>
-          <input
-            name="qty"
-            value={order.quantity}
-            onChange={(e) => {
-              this.setState({
-                quantity: e.target.value,
-              });
-              updateOrder(product, this.state.quantity);
-            }}
-          />
-          <button
-            type="button"
-            className="increment"
-            onClick={() => {
-              this.setState({
+            onClick={async () => {
+              await this.setState({
                 quantity: this.state.quantity - 1,
               });
               product.totalPrice = Math.floor(
@@ -87,19 +48,41 @@ class CartItem extends React.Component {
           >
             Down
           </button>
+          <input
+            name="qty"
+            value={this.state.quantity}
+            onChange={async (e) => {
+              await this.setState({
+                quantity: e.target.value,
+              });
+              updateOrder(product, this.state.quantity);
+            }}
+          />
+          <button
+            type="button"
+            className="increment"
+            onClick={async () => {
+              await this.setState({
+                quantity: this.state.quantity + 1,
+              });
+              product.totalPrice = Math.floor(
+                product.price * this.state.quantity
+              );
+              updateOrder(product, this.state.quantity);
+            }}
+          >
+            Up
+          </button>
         </div>
-        {/* <form onSubmit={(ev) => ev.preventDefault()}> */}
         <button type="button" className="remove" onClick={this.onDelete}>
           X
         </button>
-        {/* </form> */}
       </div>
     );
   }
 }
 
 const mapDispatch = (dispatch) => {
-  console.log("Mapping dispatch");
   return {
     removeFromCart: (product) => {
       dispatch(removeFromCart(product));
