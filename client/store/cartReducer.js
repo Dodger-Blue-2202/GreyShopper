@@ -57,12 +57,12 @@ export const removeFromCart = (product) => async (dispatch) => {
   }
 };
 
-export const addToCart = (product) => async (dispatch) => {
+export const addToCart = (product, qty) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   try {
     if (token) {
       await axios.post(`/api/orders/products`, {
-        headers: { authorization: token, body: product.id },
+        headers: { authorization: token, body: { product, qty } },
       });
     }
     dispatch(addToOrder(product));
