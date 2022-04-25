@@ -1,15 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { removeFromCart, updateOrder } from "../store";
+import { removeFromCart, addToCart } from "../store";
 
 class CartItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      quantity: 0,
+    };
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      quantity: this.props.order.quantity,
+    });
+  }
+
+  onDelete() {
+    this.props.removeFromCart(this.props.product);
   }
 
   render() {
-    const { product, order, removeFromCart, updateOrder } = this.props;
+    const { product, updateOrder } = this.props;
     return (
       <div>
         <Link to={`/products/${product.id}`} className="product-link">
@@ -22,42 +36,47 @@ class CartItem extends React.Component {
           <button
             type="button"
             className="decrement"
-            onClick={() => {
-              order.quantity -= 1;
-              product.price = Math.floor(product.price * order.quantity);
-              updateOrder(order);
+            onClick={async () => {
+              await this.setState({
+                quantity: this.state.quantity - 1,
+              });
+              product.totalPrice = Math.floor(
+                product.price * this.state.quantity
+              );
+              updateOrder(product, this.state.quantity);
             }}
           >
-            Up
+            Down
           </button>
           <input
             name="qty"
-            value={order.quantity}
-            onChange={() => {
-              updateOrder(order);
+            value={this.state.quantity}
+            onChange={async (e) => {
+              await this.setState({
+                quantity: e.target.value,
+              });
+              updateOrder(product, this.state.quantity);
             }}
           />
           <button
             type="button"
             className="increment"
-            onClick={() => {
-              order.quantity += 1;
-              product.price = Math.floor(product.price * order.quantity);
-              updateOrder(order);
+            onClick={async () => {
+              await this.setState({
+                quantity: this.state.quantity + 1,
+              });
+              product.totalPrice = Math.floor(
+                product.price * this.state.quantity
+              );
+              updateOrder(product, this.state.quantity);
             }}
           >
-            Down
+            Up
           </button>
         </div>
-        <form onSubmit={(ev) => ev.preventDefault()}>
-          <button
-            type="button"
-            className="remove"
-            onClick={() => removeFromCart(product)}
-          >
-            X
-          </button>
-        </form>
+        <button type="button" className="remove" onClick={this.onDelete}>
+          X
+        </button>
       </div>
     );
   }
@@ -65,8 +84,12 @@ class CartItem extends React.Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    removeFromCart: (product) => dispatch(removeFromCart(product)),
-    updateOrder: (product) => dispatch(updateOrder(product)),
+    removeFromCart: (product) => {
+      dispatch(removeFromCart(product));
+    },
+    updateOrder: (product, qty) => {
+      dispatch(addToCart(product, qty));
+    },
   };
 };
 

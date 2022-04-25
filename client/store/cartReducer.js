@@ -22,7 +22,7 @@ const SET_ORDER = "SET_ORDER";
 
 const setOrder = (orders) => ({ type: SET_ORDER, orders });
 const removeFromOrder = (product) => ({ type: REMOVE_FROM_ORDER, product });
-const addToOrder = (product) => ({ type: ADD_TO_ORDER, product }); //will add product to orders array
+const addToOrder = (order) => ({ type: ADD_TO_ORDER, order }); //will add product to orders array
 /**
  * THUNK CREATORS
  */
@@ -67,7 +67,7 @@ export const addToCart = (product, qty) => async (dispatch) => {
         headers: { authorization: token },
       });
     }
-    dispatch(addToOrder(product));
+    dispatch(addToOrder({ product, qty }));
     //update store
   } catch (err) {
     dispatch(setError("There was an error adding to cart"));
@@ -130,7 +130,19 @@ export default function (state = [], action) {
         return item.product.id !== action.product.id;
       });
     case ADD_TO_ORDER:
-      return [...state, action.product];
+      var temp = -1;
+      state.forEach((order, index) => {
+        if (order.product.id === action.product.id) {
+          temp = index;
+        }
+      });
+      if (temp !== -1) {
+        state[temp] = action.order;
+        return state;
+      } else {
+        return [...state, action.order];
+      }
+
     default:
       return state;
   }
