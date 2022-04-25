@@ -111,7 +111,7 @@ export const signUp = (order) => async (dispatch) => {
 };
 
 export const logout = () => {
-  //clear orders state when we log out of admin account
+  //clear orders state when we log out of account
   return {
     type: SET_ORDER,
     orders: [],
