@@ -12,7 +12,7 @@ export class UsersfetchUsers extends React.Component {
       <div className="users">
         {users.map((user) => (
           <div className="container-fluid" key={user.id}>
-            <div className="row align-items-start">{user.username}</div>
+            <div className="row align-items-center">{"   "}</div>
             <div className="row align-items-center">
               <h4>Username: {user.username}</h4>
               <h4>Email: {user.email}</h4>
