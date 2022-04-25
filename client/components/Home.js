@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Login, Signup } from './AuthForm'
+import Products from './Products'
 
 /**
  * COMPONENT
@@ -12,8 +12,6 @@ export const Home = (props) => {
 		<div>
 			<h3>Welcome, {username}</h3>
 			<Products />
-			{/* <Signup />
-      <Login /> */}
 		</div>
 	)
 }

@@ -10,7 +10,6 @@ const AuthForm = (props) => {
 	const renderEmail = () => {
 		if (name === 'signup') {
 			return (
-				// <form>
 				<div className="row mb-3">
 					<label htmlFor="email">
 						<small>Email</small>
@@ -19,13 +18,6 @@ const AuthForm = (props) => {
 						<input name="email" type="email" />
 					</div>
 				</div>
-				// </form>
-				// <div className="signup">
-				// 	<label htmlFor="email">
-				// 		<small>Email</small>
-				// 	</label>
-				// 	<input name="email" type="email" />
-				// </div>
 			)
 		}
 	}
@@ -55,28 +47,6 @@ const AuthForm = (props) => {
 				{error && error.response && <div> {error.response.data} </div>}
 			</form>
 		</div>
-
-		// <div className="login">
-		// 	<form onSubmit={handleSubmit} name={name}>
-		// 		<div>
-		// 			<label htmlFor="username">
-		// 				<small>Username</small>
-		// 			</label>
-		// 			<input name="username" type="text" />
-		// 		</div>
-		// 		{renderEmail()}
-		// 		<div>
-		// <label htmlFor="password">
-		// 	<small>Password</small>
-		// </label>
-		// 			<input name="password" type="password" />
-		// 		</div>
-		// <div>
-		// 	<button type="submit">{displayName}</button>
-		// </div>
-		// 		{error && error.response && <div> {error.response.data} </div>}
-		// 	</form>
-		// </div>
 	)
 }
 
