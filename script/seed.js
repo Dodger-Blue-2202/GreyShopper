@@ -37,60 +37,80 @@ const products = [
     price: 400,
     description: "Brushes more than one hair at a time!",
     stock: 7,
+    imageUrl:
+      "https://www.sephora.com/productimages/sku/s1506492-main-zoom.jpg",
   },
   {
     name: "A Single Spoon",
     price: 4200000,
     description: "This is the best spoon.",
     stock: 1,
+    imageUrl:
+      "https://www.cutlery-luxury.mj777.com/pic/vip1/Luxury%20Amber%20VIP%20-%20Gold%20Spoon%20Exclusive_3.jpg",
   },
   {
     name: "Two Spoons",
     price: 1,
     description: "Almost worthless.",
     stock: 43,
+    imageUrl:
+      "https://royaldesign.com/image/2/aida-raw-cutlery-2pcs-gravy-potato-spoon-giftbox-0?w=168&quality=80",
   },
   {
     name: "Coat Hanger",
     price: 100,
     description: "Hang your clothes on this.",
     stock: 7,
+    imageUrl:
+      "https://i.etsystatic.com/6944591/r/il/444c41/3618253733/il_570xN.3618253733_8aq3.jpg",
   },
   {
     name: "Coffee Beans",
     price: 800,
     description: "Questionably sourced.",
     stock: 13,
+    imageUrl:
+      "https://cdn11.bigcommerce.com/s-2drwt2az/images/stencil/original/products/25099/70039/api8vpe0r__26940.1592322807.jpg?c=2",
   },
   {
     name: "Chode Jeans",
     price: 4000,
     description: "Size 54 waist, 10 inch legs. They're junk.",
     stock: 2,
+    imageUrl:
+      "https://preview.redd.it/1h7bwmant8a71.png?width=1738&format=png&auto=webp&s=256c5d5274f84eb3e6ce11468007e41708fa87fb",
   },
   {
     name: "Black T-Shirt",
     price: 1000,
     description: "It's got 4 holes of various sizes, figure it out.",
     stock: 3,
+    imageUrl:
+      "https://www.inexhibit.com/wp-content/uploads/2021/11/Metaverse-Zuckerberg-3.jpg",
   },
   {
     name: "White T-Shirt",
     price: 1000,
     description: "Comes pre-stained",
     stock: 3,
+    imageUrl:
+      "https://www.onlineworldofwrestling.com/wp-content/uploads/2012/04/DD-1.jpg",
   },
   {
     name: "Pair of Shoes",
     price: 3000,
     description: "We won't tell you the size or brand. You feeling lucky?",
     stock: 7,
+    imageUrl:
+      "https://cdn-3.cinemaparadiso.co.uk/film-stills/858171-30758-clp-720.jpg",
   },
   {
     name: "One Sock",
     price: 299,
     description: "We sell them like this so you have to buy two.",
     stock: 9,
+    imageUrl:
+      "https://static.wikia.nocookie.net/spongebob/images/3/3d/Dining_sock.jpg/revision/latest?cb=20120928060637",
   },
 ];
 
