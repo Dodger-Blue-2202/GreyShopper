@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logout } from '../store'
+import { logout, logoutCart } from '../store'
 import Cart from '../../public/images/cart.svg'
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin, username }) => {
@@ -72,6 +72,7 @@ const mapDispatch = (dispatch) => {
 	return {
 		handleClick() {
 			dispatch(logout())
+			dispatch(logoutCart())
 		},
 	}
 }
