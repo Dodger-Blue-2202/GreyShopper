@@ -5,8 +5,11 @@ import { logout } from '../store'
 import Cart from '../../public/images/cart.svg'
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin, username }) => {
-	console.log(isLoggedIn)
-	console.log(`${username} isAdmin: ${isAdmin}`)
+	const admin = () => {
+		if (isAdmin) {
+			return <Link to="/users">Users</Link>
+		}
+	}
 	const guest = () => {
 		if (!isLoggedIn) {
 			return (
@@ -36,6 +39,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, username }) => {
 						<Link to="/products" className="Nav-Products">
 							Products
 						</Link>
+						{admin()}
 						<div className="cart">
 							<button type="submit" onClick={handleClick}>
 								Logout

@@ -1,7 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchProducts } from '../store/productsReducer'
+import {
+	fetchProducts,
+	deleteProduct,
+	putProduct,
+} from '../store/productsReducer'
 
 export class Products extends React.Component {
 	componentDidMount() {
@@ -9,6 +13,20 @@ export class Products extends React.Component {
 	}
 	render() {
 		const products = this.props.products
+		const deleteButton = () => (
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={this.props.deleteProduct}
+			>
+				Delete
+			</button>
+		)
+		const editButton = () => (
+			<button type="button" className="btn btn-success">
+				Edit
+			</button>
+		)
 		return (
 			<div className="products">
 				{products.map((product) => (
@@ -28,9 +46,11 @@ export class Products extends React.Component {
 							<h4>Quantity: {product.stock}</h4>
 						</div>
 						<div className="addToCartButton">
+							{this.props.isAdmin ? editButton() : null}
 							<button type="button" className="btn btn-primary">
 								Add to cart
 							</button>
+							{this.props.isAdmin ? deleteButton() : null}
 						</div>
 					</div>
 				))}
@@ -39,11 +59,16 @@ export class Products extends React.Component {
 	}
 }
 
-const mapState = (state) => ({ products: state.products })
+const mapState = (state) => ({
+	products: state.products,
+	isAdmin: state.auth.isAdmin,
+})
 
 const mapDispatch = (dispatch) => {
 	return {
 		fetchProducts: () => dispatch(fetchProducts()),
+		deleteProduct: () => dispatch(deleteProduct()),
+		editProduct: () => dispatch(putProduct()),
 	}
 }
 
