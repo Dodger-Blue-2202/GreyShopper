@@ -33,8 +33,9 @@ export const me = () => async dispatch => {
 }
 //if method is sign up then it passes along the sign up email and current store to initialize db for the user
 // if its log in then those two values aren't needed 
-export const authenticate = (username, password, method, email = "", cart = {}) => async dispatch => {
+export const authenticate = (username, password, method, email = "", cart = []) => async dispatch => {
   try {
+    console.log(cart)
     const res = await axios.post(`/auth/${method}`, {username, password, email, cart})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())

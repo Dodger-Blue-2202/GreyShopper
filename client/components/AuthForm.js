@@ -6,7 +6,7 @@ import { authenticate } from '../store'
  * COMPONENT
  */
 const AuthForm = (props) => {
-	const { name, displayName, handleSubmit, error } = props
+	const { name, displayName, handleSubmit, error, cart } = props
 	const renderEmail = () => {
 		if (name === 'signup') {
 			return (
@@ -23,7 +23,7 @@ const AuthForm = (props) => {
 	}
 	return (
 		<div className="signup">
-			<form onSubmit={handleSubmit} name={name}>
+			<form onSubmit={(e)=>handleSubmit(e, cart)} name={name}>
 				<div className="row mb-3">
 					<label htmlFor="username">
 						<small>Username</small>
@@ -62,6 +62,7 @@ const mapLogin = (state) => {
 		name: 'login',
 		displayName: 'Login',
 		error: state.auth.error,
+		cart:state.cart
 	}
 }
 
@@ -70,13 +71,13 @@ const mapSignup = (state) => {
 		name: 'signup',
 		displayName: 'Sign Up',
 		error: state.auth.error,
-		// cart: state.cart
+		cart: state.cart
 	}
 }
 
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(evt) {
+		handleSubmit(evt,cart) {
 			evt.preventDefault()
 			const formName = evt.target.name
 			const username = evt.target.username.value
@@ -90,8 +91,8 @@ const mapDispatch = (dispatch) => {
 					username,
 					password,
 					formName,
-					email
-					// this.props.cart
+					email,
+					cart
 				)
 			)
 		},

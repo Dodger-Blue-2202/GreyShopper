@@ -44,53 +44,60 @@ export const fetchOrders = () => async (dispatch) => {
 
 export const removeFromCart = (product) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
-  try {
-    if (token) {
+  if (token) {
+    try {
       await axios.delete(`/api/orders/products`, {
         data: product,
         headers: { authorization: token },
       });
-    }
-    dispatch(removeFromOrder(product));
     //update store
-  } catch (err) {
+    } catch (err) {
     dispatch(setError("There was an error removing from cart"));
+    }
   }
+  dispatch(removeFromOrder(product));
 };
 
-export const addToCart = (product, qty) => async (dispatch) => {
+export const addToCart = (product, quantity) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
-  try {
-    if (token) {
+  if (token) {
+    try {
       await axios.post(`/api/orders/products`, {
-        data: { product, qty },
+        data: { product, quantity },
         headers: { authorization: token },
       });
-    }
-    dispatch(addToOrder({ product, qty }));
     //update store
-  } catch (err) {
+    } catch (err) {
     dispatch(setError("There was an error adding to cart"));
+    }
   }
+    dispatch(addToOrder({ product, quantity }));
+
 };
 
 export const checkOut = (order) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   //VERIFY AUTHORIZATION WITH TOKEN
-  try {
-    await axios.put(`/api/orders/checkout`, {
+  if (token){try {
+    let completedOrders = await axios.put(`/api/orders/checkout`,{
       data: order,
+    },{
       headers: { authorization: token },
-    }); // if token exists in authorization then checkout order by setting isCart to false identified by token
+    },); // if token exists in authorization then checkout order by setting isCart to false identified by token
     //Otherwise create an order and add that to order db with null user and checkout
     //then we want to create a new order to fill
-    dispatch(setOrder([])); //clears cart to set up new order
+    if (!completedOrders.data.includes(null)){
+      alert("All Orders succesfully completed")
+    }else{
+      alert("At least one order not successfully completed.")
+    }
+    let uncompleted = completedOrders.data.filter((order)=>{return !order})
+    dispatch(fetchOrders()); //clears cart to set up new order
   } catch (err) {
-    dispatch(
-      setError(
-        "Error getting order data. Current user might not have admin access"
-      )
+    dispatch(setError("Error completing checkout")
     );
+  }}else{
+    //non logged in user must create orders and add to db even without username
   }
 };
 
@@ -110,8 +117,8 @@ export const signUp = (order) => async (dispatch) => {
   }
 };
 
-export const logout = () => {
-  //clear orders state when we log out of admin account
+export const logoutCart = () => {
+  //clear orders state when we log out of account
   return {
     type: SET_ORDER,
     orders: [],
@@ -132,7 +139,7 @@ export default function (state = [], action) {
     case ADD_TO_ORDER:
       var temp = -1;
       state.forEach((order, index) => {
-        if (order.product.id === action.product.id) {
+        if (order.product.id === action.order.product.id) {
           temp = index;
         }
       });
