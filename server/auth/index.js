@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User },
+  models: { User,Order ,Product},
 } = require("../db");
 module.exports = router;
 
@@ -15,6 +15,22 @@ router.post("/login", async (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
+    if (req.body.cart){
+    let cart = await Order.create();
+    user.addOrder(cart)
+    await Promise.all(req.body.cart.map(async (order)=>{
+      let product = await Product.findByPk(order.product.id);
+      console.log
+      await product.addOrder(cart, {
+        through: {
+          quantity: order.quantity,
+          total_price: Number(product.price) * Number(order.quantity),
+          isCart: true,
+        },
+      });
+  
+     }))
+    }
     //body now contains cart data to create a user with a cart if a user signs up after adding items to cart
     res.send({ token: await user.generateToken() });
   } catch (err) {

@@ -2,13 +2,32 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchProducts } from '../store/productsReducer'
-
+import { addToCart } from '../store'
 export class Products extends React.Component {
 	componentDidMount() {
 		this.props.fetchProducts()
 	}
 	render() {
 		const products = this.props.products
+		const addCartHandler = (product,event) =>{
+			event.preventDefault()
+			this.props.addToCart(product,event.target.quantity.value)
+		}
+		const qtyOptions = (qty)=>{
+			let options = []
+			for (let i=0;i<=qty;i++){
+				options.push(<option key={i}>{i}</option>)
+			}
+			return options
+		}
+		const defaultQty = (product) =>{
+			let item = this.props.cart.filter((order)=>{
+				return (order.product.id===product.id)}
+				)[0];
+			if(item){
+				return item.quantity}
+			else{0} 
+		}
 		return (
 			<div className="products">
 				{products.map((product) => (
@@ -25,12 +44,18 @@ export class Products extends React.Component {
 							<h4>Name: {product.name}</h4>
 							<h4>Price: ${product.price}</h4>
 							<h4>Description: {product.description}</h4>
-							<h4>Quantity: {product.stock}</h4>
+							<h4>Stock: {product.stock}</h4>
 						</div>
 						<div className="addToCartButton">
-							<button type="button" className="btn btn-primary">
+							<form onSubmit = {(e) =>addCartHandler(product,e)}>
+								<label for="quantity">Amount to add</label>
+								<select id ="quantity" name="quantity" defaultValue={defaultQty(product)}>
+									{qtyOptions(product.stock)}
+								</select>
+							<button  type="submit" className="btn btn-primary">
 								Add to cart
 							</button>
+							</form>
 						</div>
 					</div>
 				))}
@@ -39,11 +64,12 @@ export class Products extends React.Component {
 	}
 }
 
-const mapState = (state) => ({ products: state.products })
+const mapState = (state) => ({ products: state.products, cart: state.cart})
 
 const mapDispatch = (dispatch) => {
 	return {
 		fetchProducts: () => dispatch(fetchProducts()),
+		addToCart: (product,qty)=>{dispatch(addToCart(product,qty))}
 	}
 }
 

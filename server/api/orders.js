@@ -26,7 +26,6 @@ router.get("/", async (req, res, next) => {
 // update item amount in cart
 router.post("/products", async (req, res, next) => {
   try {
-    console.log("req is ", req.body);
     let product = await Product.findByPk(req.body.data.product.id);
     let user = await User.findByToken(req.body.headers.authorization);
     // this is the cart
@@ -38,7 +37,7 @@ router.post("/products", async (req, res, next) => {
       order = await Order.create();
       user.addOrder(order)
     }
-    let qty = req.body.data.qty || 1;
+    let qty = req.body.data.quantity || 1;
     await product.addOrder(order, {
       through: {
         quantity: qty,

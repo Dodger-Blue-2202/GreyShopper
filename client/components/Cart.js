@@ -48,7 +48,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchOrders: () => dispatch(fetchOrders()),
-    checkOut: () => dispatch(checkOut()),
+    checkOut: (order) => dispatch(checkOut(order)),
   };
 };
 
