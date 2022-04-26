@@ -6,7 +6,6 @@ module.exports = router;
 
 router.use("/", async (req, res, next) => {
   try {
-    console.log(req.headers.authorization);
     const isAdmin = await User.checkAdminAccess(req.headers.authorization);
     if (!isAdmin) {
       throw "Does not have correct authorization";
