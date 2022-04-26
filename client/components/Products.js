@@ -1,14 +1,36 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchProducts } from '../store/productsReducer'
+
+import {
+	fetchProducts,
+	deleteProduct,
+	putProduct,
+} from '../store/productsReducer'
 import { addToCart } from '../store'
+
 export class Products extends React.Component {
 	componentDidMount() {
 		this.props.fetchProducts()
 	}
 	render() {
 		const products = this.props.products
+
+		const deleteButton = () => (
+			<button
+				type="button"
+				className="btn btn-danger"
+				onClick={this.props.deleteProduct}
+			>
+				Delete
+			</button>
+		)
+		const editButton = () => (
+			<button type="button" className="btn btn-success">
+				Edit
+			</button>
+		)
+
 		const addCartHandler = (product,event) =>{
 			event.preventDefault()
 			this.props.addToCart(product,event.target.quantity.value)
@@ -28,6 +50,7 @@ export class Products extends React.Component {
 				return item.quantity}
 			else{0} 
 		}
+
 		return (
 			<div className="products">
 				{products.map((product) => (
@@ -47,6 +70,13 @@ export class Products extends React.Component {
 							<h4>Stock: {product.stock}</h4>
 						</div>
 						<div className="addToCartButton">
+
+							{this.props.isAdmin ? editButton() : null}
+							<button type="button" className="btn btn-primary">
+								Add to cart
+							</button>
+							{this.props.isAdmin ? deleteButton() : null}
+
 							<form onSubmit = {(e) =>addCartHandler(product,e)}>
 								<label for="quantity">Amount to add</label>
 								<select id ="quantity" name="quantity" defaultValue={defaultQty(product)}>
@@ -56,6 +86,7 @@ export class Products extends React.Component {
 								Add to cart
 							</button>
 							</form>
+
 						</div>
 					</div>
 				))}
@@ -64,12 +95,23 @@ export class Products extends React.Component {
 	}
 }
 
-const mapState = (state) => ({ products: state.products, cart: state.cart})
+
+const mapState = (state) => ({
+	products: state.products,
+	isAdmin: state.auth.isAdmin,
+  cart: state.cart
+})
+
 
 const mapDispatch = (dispatch) => {
 	return {
 		fetchProducts: () => dispatch(fetchProducts()),
+
+		deleteProduct: () => dispatch(deleteProduct()),
+		editProduct: () => dispatch(putProduct()),
+
 		addToCart: (product,qty)=>{dispatch(addToCart(product,qty))}
+
 	}
 }
 

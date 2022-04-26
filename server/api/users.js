@@ -4,18 +4,17 @@ const {
 } = require("../db");
 module.exports = router;
 
-router.use("/", async (req,res,next)=>{
+router.use("/", async (req, res, next) => {
   try {
-    console.log(req.headers.authorization)
-    const isAdmin = await User.checkAdminAccess(req.headers.authorization)
-    if (!isAdmin){
-      throw "Does not have correct authorization"
+    const isAdmin = await User.checkAdminAccess(req.headers.authorization);
+    if (!isAdmin) {
+      throw "Does not have correct authorization";
     }
-    next()
+    next();
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 // this is /api/users
 router.get("/", async (req, res, next) => {
   try {
@@ -23,7 +22,7 @@ router.get("/", async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ["id", "username"],
+      attributes: ["id", "username", "email"],
     });
     res.json(users);
   } catch (err) {
