@@ -110,7 +110,7 @@ const products = [
     description: "We sell them like this so you have to buy two.",
     stock: 9,
     imageUrl:
-      "https://static.wikia.nocookie.net/spongebob/images/3/3d/Dining_sock.jpg/revision/latest?cb=20120928060637",
+      "https://static.wikia.nocookie.net/spongebob/images/3/3d/Dining_sock.jpg",
   },
 ];
 
