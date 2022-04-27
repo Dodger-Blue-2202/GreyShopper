@@ -7,6 +7,7 @@ import Products from './components/Products'
 import SingleProduct from './components/SingleProduct'
 import Users from './components/Users'
 import Cart from './components/Cart'
+import EditProduct from './components/EditProduct'
 import { me } from './store'
 
 /**
@@ -33,6 +34,7 @@ class Routes extends Component {
 							component={SingleProduct}
 						/>
 						<Route exact path="/cart" component={Cart} />
+						<Route exact path="/edit/:id" component={EditProduct} />
 						<Redirect to="/home" />
 					</Switch>
 				) : (

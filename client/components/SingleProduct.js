@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { fetchSingleProduct } from '../store/productReducer'
 import { deleteProduct, putProduct } from '../store/productsReducer'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import { addToCart } from '../store'
 
 export class SingleProduct extends React.Component {
 	componentDidMount() {
@@ -23,10 +24,34 @@ export class SingleProduct extends React.Component {
 			</button>
 		)
 		const editButton = () => (
-			<button type="button" className="btn btn-success">
-				Edit
-			</button>
+			<Link to={`/edit/${product.id}`}>
+				<button type="button" className="btn btn-success">
+					Edit
+				</button>
+			</Link>
 		)
+
+		const addCartHandler = (product, event) => {
+			event.preventDefault()
+			this.props.addToCart(product, event.target.quantity.value)
+		}
+		const qtyOptions = (qty) => {
+			let options = []
+			for (let i = 0; i <= qty; i++) {
+				options.push(<option key={i}>{i}</option>)
+			}
+			return options
+		}
+		const defaultQty = (product) => {
+			let item = this.props.cart.filter((order) => {
+				return order.product.id === product.id
+			})[0]
+			if (item) {
+				return item.quantity
+			} else {
+				0
+			}
+		}
 		return (
 			<div className="product">
 				<div className="container-fluid" key={product.id}>
@@ -46,10 +71,23 @@ export class SingleProduct extends React.Component {
 					</div>
 					<div className="addToCartButton">
 						{this.props.isAdmin ? editButton() : null}
-						<button type="button" className="btn btn-primary">
+						{/* <button type="button" className="btn btn-primary">
 							Add to cart
-						</button>
+						</button> */}
 						{this.props.isAdmin ? deleteButton() : null}
+						<form onSubmit={(e) => addCartHandler(product, e)}>
+							<label for="quantity">Amount to add</label>
+							<select
+								id="quantity"
+								name="quantity"
+								defaultValue={defaultQty(product)}
+							>
+								{qtyOptions(product.stock)}
+							</select>
+							<button type="submit" className="btn btn-primary">
+								Add to cart
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -60,13 +98,17 @@ export class SingleProduct extends React.Component {
 const mapState = (state) => ({
 	product: state.product,
 	isAdmin: state.auth.isAdmin,
+	cart: state.cart,
 })
 
 const mapDispatch = (dispatch) => {
 	return {
 		fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-		deleteProduct: () => dispatch(deleteProduct()),
+		deleteProduct: (id) => dispatch(deleteProduct(id)),
 		editProduct: () => dispatch(putProduct()),
+		addToCart: (product, qty) => {
+			dispatch(addToCart(product, qty))
+		},
 	}
 }
 
