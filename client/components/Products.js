@@ -25,30 +25,32 @@ export class Products extends React.Component {
 				Delete
 			</button>
 		)
-		const editButton = () => (
-			<button type="button" className="btn btn-success">
-				Edit
-			</button>
-		)
+		// const editButton = () => (
+		// 	<button type="button" className="btn btn-success">
+		// 		Edit
+		// 	</button>
+		// )
 
-		const addCartHandler = (product,event) =>{
+		const addCartHandler = (product, event) => {
 			event.preventDefault()
-			this.props.addToCart(product,event.target.quantity.value)
+			this.props.addToCart(product, event.target.quantity.value)
 		}
-		const qtyOptions = (qty)=>{
+		const qtyOptions = (qty) => {
 			let options = []
-			for (let i=0;i<=qty;i++){
+			for (let i = 0; i <= qty; i++) {
 				options.push(<option key={i}>{i}</option>)
 			}
 			return options
 		}
-		const defaultQty = (product) =>{
-			let item = this.props.cart.filter((order)=>{
-				return (order.product.id===product.id)}
-				)[0];
-			if(item){
-				return item.quantity}
-			else{0} 
+		const defaultQty = (product) => {
+			let item = this.props.cart.filter((order) => {
+				return order.product.id === product.id
+			})[0]
+			if (item) {
+				return item.quantity
+			} else {
+				0
+			}
 		}
 
 		return (
@@ -70,23 +72,28 @@ export class Products extends React.Component {
 							<h4>Stock: {product.stock}</h4>
 						</div>
 						<div className="addToCartButton">
-
-							{this.props.isAdmin ? editButton() : null}
-							<button type="button" className="btn btn-primary">
+							{/* {this.props.isAdmin ? editButton() : null} */}
+							{/* <button type="button" className="btn btn-primary">
 								Add to cart
-							</button>
+							</button> */}
 							{this.props.isAdmin ? deleteButton() : null}
 
-							<form onSubmit = {(e) =>addCartHandler(product,e)}>
+							<form onSubmit={(e) => addCartHandler(product, e)}>
 								<label for="quantity">Amount to add</label>
-								<select id ="quantity" name="quantity" defaultValue={defaultQty(product)}>
+								<select
+									id="quantity"
+									name="quantity"
+									defaultValue={defaultQty(product)}
+								>
 									{qtyOptions(product.stock)}
 								</select>
-							<button  type="submit" className="btn btn-primary">
-								Add to cart
-							</button>
+								<button
+									type="submit"
+									className="btn btn-primary"
+								>
+									Add to cart
+								</button>
 							</form>
-
 						</div>
 					</div>
 				))}
@@ -95,23 +102,22 @@ export class Products extends React.Component {
 	}
 }
 
-
 const mapState = (state) => ({
 	products: state.products,
 	isAdmin: state.auth.isAdmin,
-  cart: state.cart
+	cart: state.cart,
 })
-
 
 const mapDispatch = (dispatch) => {
 	return {
 		fetchProducts: () => dispatch(fetchProducts()),
 
-		deleteProduct: () => dispatch(deleteProduct()),
+		deleteProduct: (id) => dispatch(deleteProduct(id)),
 		editProduct: () => dispatch(putProduct()),
 
-		addToCart: (product,qty)=>{dispatch(addToCart(product,qty))}
-
+		addToCart: (product, qty) => {
+			dispatch(addToCart(product, qty))
+		},
 	}
 }
 

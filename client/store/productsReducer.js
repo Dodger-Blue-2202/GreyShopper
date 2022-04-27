@@ -32,7 +32,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 	//VERIFY AUTHORIZATION WITH TOKEN
 	if (token) {
 		try {
-			const res = await axios.delete(`/api/products/:${id}`, {
+			const res = await axios.delete(`/api/products/${id}`, {
 				headers: { authorization: token },
 			})
 			//deletes product if we have admin access
@@ -78,7 +78,7 @@ export const putProduct = (product) => async (dispatch) => {
 	//VERIFY AUTHORIZATION WITH TOKEN
 	if (token) {
 		try {
-			const res = await axios.put(`/api/products/:${product.id}`, {
+			const res = await axios.put(`/api/products/${product.id}`, {
 				headers: { authorization: token },
 				body: product,
 			})
