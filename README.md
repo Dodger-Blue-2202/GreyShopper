@@ -20,63 +20,46 @@
     An online e-commerce platform specializing in gag and comedy items.
     <br />
 
-Graceshopper is an online e-commerce platform specializing in gag and comedy items.
-
-From raw, unprocessed coffee beans to magic spoons, find all your special comedic needs on Graceshopper!
+Graceshopper is an online e-commerce application built on React. From raw, unprocessed coffee beans to magic spoons, find all your special comedic needs on Graceshopper!
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
 
-_</b> Image(s) Insert Here_ </b> - here is where you can place images of your project, a demo gif, and link to a deployed site - visuals matter!
+_</b> Add pics here after styling_ </b>
 
 <p align=‘center’/>
 <p align='center'><a href="https://www.loom.com/share/04d6c8482c7341fb9b423d10f0bea30b"> <img style="max-width:300px" src="https://cdn.loom.com/sessions/thumbnails/04d6c8482c7341fb9b423d10f0bea30b-with-play.gif"> </br> <p align='center'> Watch Video</p> </a> </p>
 
-## Deployed Site <project_name>:
+## Deployed Site Graceshopper:
 
 Check out Graceshopper <a href="https://dashboard.heroku.com/apps/dodgerblue-graceshopper">here</a>!
 
-## Prerequisites:
+## Prerequisites and installation:
 
 Before you begin, ensure you have met the following requirements:
 
-<!--- These are just example requirements. Add, duplicate or remove as required --->
+- You have installed the latest version of node
+- You have a Windows/Linux/Mac machine.
 
-- You have installed the latest version of `<coding_language/dependency/requirement_1>`
-- You have a `<Windows/Linux/Mac>` machine. State which OS is supported/which is not.
-- You have read `<guide/link/documentation_related_to_project>`.
+## Installing Graceshopper:
 
-## Installing <project_name>:
+To install Graceshopper, follow these steps:
 
-To install <project_name>, follow these steps: Click "Use This Template"
+- Fork this repository
 
 Linux and macOS:
 
 ```
-<install_command>
+git clone git@github.com:Dodger-Blue-2202/graceshopper.git
+cd graceshopper
+npm install
+createdb graceshopper
 ```
-
-Windows:
-
-```
-<install_command>
-```
-
-## Using <project_name>:
-
-To use <project_name>, follow these steps:
-
-```
-<usage_example>
-```
-
-Add run commands and examples you think users will find useful.
-Provide an options reference for bonus points!
 
 ## Contributors/Collaborators:
 
 Check out the team behind Graceshopper:
 
 - [Parry Tu Github](https://github.com/ParryTu) [Linkedin](http://linkedin.com/in/parryt/)
-- [@N2ameOFpersonwhohelpedyou](https://github.com/theirN@me)
-- [@N2ameOFpersonwhohelpedyou](https://github.com/theirN@me)
-- [@N2ameOFpersonwhohelpedyou](https://github.com/theirN@me)
+- [Mike LeBegue ](https://github.com/MikeLeBe19)[Linkedin](https://www.linkedin.com/in/mike-lebegue/)
+- [Jacob Shivers](https://github.com/jtshivers) [Linkedin](https://www.linkedin.com/in/jacob-shivers/)
+- [Mahdi Choudhury](https://github.com/mc5368) [Linkedin](https://www.linkedin.com/in/mahdichoudhury/)
