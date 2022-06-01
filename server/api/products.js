@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Product,User },
+  models: { Product, User },
 } = require("../db");
 module.exports = router;
 
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.use("/", async (req,res,next)=>{
+/* router.use("/", async (req,res,next)=>{
   try {
     const isAdmin = await User.checkAdminAccess(req.headers.authorization)
     if (!isAdmin){
@@ -33,7 +33,7 @@ router.use("/", async (req,res,next)=>{
   } catch (error) {
     next(error)
   }
-})
+}) */
 // ADMIN ACCESS ONLY BELOW
 // add a product
 router.post("/", async (req, res, next) => {

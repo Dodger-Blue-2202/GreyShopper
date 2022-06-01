@@ -1,77 +1,65 @@
-# FS-App-Template
+# Grace Shopper
 
-## Setup
+<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
 
-To use this as boilerplate, you'll need to take the following steps:
+![GitHub contributors](https://img.shields.io/github/contributors/nicolerae/README-templateFSA.md)
+![GitHub stars](https://img.shields.io/github/stars/nicolerae/README-templateFSA.md?style=social)
+![GitHub forks](https://img.shields.io/github/forks/nicolerae/README-templateFSA.md?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/nicole_rae?style=social)
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://www.fullstackacademy.com/">
+    <img src="https://media.glassdoor.com/sqll/980700/fullstack-academy-squareLogo-1634676275302.png" alt="Logo" width="100" height="100">
+  </a>
 
-* Now you will have to add the fs-app-template as a remote and merge it into your own repository.
+  <h3 align="center">Graceshopper</h3>
+
+  <p align="center">
+    An online e-commerce platform specializing in gag and comedy items.
+    <br />
+
+Graceshopper is an online e-commerce application built on React. From raw, unprocessed coffee beans to magic spoons, find all your special comedic needs on Graceshopper!
+
+<!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
+
+_</b> Add pics here after styling_ </b>
+
+<p align=‘center’/>
+<p align='center'><a href="https://www.loom.com/share/04d6c8482c7341fb9b423d10f0bea30b"> <img style="max-width:300px" src="https://cdn.loom.com/sessions/thumbnails/04d6c8482c7341fb9b423d10f0bea30b-with-play.gif"> </br> <p align='center'> Watch Video</p> </a> </p>
+
+## Deployed Site Graceshopper:
+
+Check out Graceshopper <a href="https://dashboard.heroku.com/apps/dodgerblue-graceshopper">here</a>!
+
+## Prerequisites and installation:
+
+Before you begin, ensure you have met the following requirements:
+
+- You have installed the latest version of node
+- You have a Windows/Linux/Mac machine.
+
+## Installing Graceshopper:
+
+To install Graceshopper, follow these steps:
+
+- Fork this repository
+
+Linux and macOS:
 
 ```
-git remote add boilermaker git@github.com:FullstackAcademy/fs-app-template.git
-git fetch boilermaker
-git merge boilermaker/main
-git branch -m master main
+git clone git@github.com:Dodger-Blue-2202/graceshopper.git
+cd graceshopper
+npm install
+createdb graceshopper
 ```
 
-## Customize
+## Contributors/Collaborators:
 
-Now that you've got the code, follow these steps to get acclimated:
+Check out the team behind Graceshopper:
 
-* Update project name and description in `package.json`
-* `npm install`
-* Create two postgres databases (`MY_APP_NAME` should match the `name`
-  parameter in `package.json`):
-* These commands will create both your **development** and **test** databases
-
-```
-createdb <YOUR APP NAME HERE FROM package.json>
-createdb <YOUR APP NAME HERE FROM package.json>-test
-```
-
-* By default, running `npm test` will use your test database, while
-  regular development uses development database
-
-## Start
-
-Sync and seed your database by running `npm run seed`. Running `npm run start:dev` will make great things happen!
-
-- start:dev will both start your server and build your client side files using webpack
-- start:dev:logger is the same as start:dev, but you will see your SQL queries (can be helpful for debugging)
-- start:dev:seed will start your server and also seed your database (this is useful when you are making schema changes and you don't want to run your seed script separately)
-
-
-### Heroku
-
-1.  Set up the [Heroku command line tools][heroku-cli]
-2.  `heroku login`
-3.  Add a git remote for heroku:
-
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-cli
-
-* **If you are creating a new app...**
-
-  1.  `heroku create` or `heroku create your-app-name` if you have a
-      name in mind.
-  2.  `heroku config:set JWT=<your secret here!>` to set a secret for JWT signing
-
-Database Setup
-
-  3.  `heroku addons:create heroku-postgresql:hobby-dev` to add
-      ("provision") a postgres database to your heroku dyno (This creates your production database)
-
-  4.  `heroku config:set SEED=true` to get heroku to sync and seed your database
-
-  5.   note everytime your app restarts, the database tables will be dropped and re-created. To avoid this you can `config:unset SEED`
-
-
-* **If you already have a Heroku app...**
-
-  1.  `heroku git:remote your-app-name` You'll need to be a
-      collaborator on the app.
-
-
-Now, you should be deployed!
+- [Parry Tu Github](https://github.com/ParryTu) [Linkedin](http://linkedin.com/in/parryt/)
+- [Mike LeBegue ](https://github.com/MikeLeBe19)[Linkedin](https://www.linkedin.com/in/mike-lebegue/)
+- [Jacob Shivers](https://github.com/jtshivers) [Linkedin](https://www.linkedin.com/in/jacob-shivers/)
+- [Mahdi Choudhury](https://github.com/mc5368) [Linkedin](https://www.linkedin.com/in/mahdichoudhury/)
