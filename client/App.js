@@ -1,15 +1,31 @@
-import React from 'react'
+import React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import Navbar from './components/Navbar'
-import Routes from './Routes'
+import Navbar from "./components/Newnav";
+import Routes from "./Routes";
+
+const theme = createTheme({
+  palette: {
+    type: "light",
+    primary: {
+      main: "#3f51b5",
+    },
+    secondary: {
+      main: "#f50057",
+    },
+    info: {
+      main: "#2196f3",
+    },
+  },
+});
 
 const App = () => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Navbar />
       <Routes />
-    </div>
-  )
-}
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
