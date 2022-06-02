@@ -12,9 +12,20 @@ import {
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import SearchIcon from "@mui/icons-material/Search";
+import { useSelector, useDispatch } from "react-redux";
+
+import { addToCart } from "../store";
 
 export default function MultiActionAreaCard(props) {
-  const { id, imageUrl, name, price, description, stock } = props;
+  const { product } = props;
+  const { id, imageUrl, name, price, description, stock } = product;
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const handleAdd = () => {
+    dispatch(addToCart(product, 1));
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -46,7 +57,7 @@ export default function MultiActionAreaCard(props) {
             </ButtonGroup>
           </Grid>
           <Grid item>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" onClick={handleAdd}>
               <AddShoppingCartIcon />
             </Button>
           </Grid>
