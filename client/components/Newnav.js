@@ -1,6 +1,4 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, logoutCart } from "../store";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
@@ -20,6 +18,10 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginOutlined from "@mui/icons-material/LoginOutlined";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Badge from "@mui/material/Badge";
+
+import { useSelector, useDispatch } from "react-redux";
+import { logout, logoutCart } from "../store";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -111,8 +113,15 @@ export default function Navbar(props) {
                     display: { xs: "block", md: "none" },
                   }}
                 >
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center"> All Products</Typography>
+                  <MenuItem onClick={handleCloseNavMenu} href="/products">
+                    <Button
+                      size="medium"
+                      href="/products"
+                      onClick={handleCloseNavMenu}
+                      disableRipple
+                    >
+                      All Products
+                    </Button>
                   </MenuItem>
                   {isLoggedIn ? (
                     <MenuItem>
@@ -134,7 +143,7 @@ export default function Navbar(props) {
                         startIcon={<LoginOutlined />}
                         size="medium"
                         disableRipple
-                        href="/"
+                        href="/signin"
                         onClick={handleCloseNavMenu}
                       >
                         Sign In
@@ -174,6 +183,7 @@ export default function Navbar(props) {
                     onClick={handleCloseNavMenu}
                     size="medium"
                     sx={{ my: 2, color: "white" }}
+                    href="/products"
                   >
                     All Products
                   </Button>
@@ -193,7 +203,7 @@ export default function Navbar(props) {
                           color="secondary"
                           startIcon={<LoginOutlined />}
                           size="medium"
-                          href="/login"
+                          href="/signin"
                           sx={{ my: 2, color: "white" }}
                         >
                           Sign In
@@ -205,12 +215,12 @@ export default function Navbar(props) {
                           variant="contained"
                           color="secondary"
                           endIcon={<LogoutOutlined />}
+                          href="/"
                           onClick={handleClick}
                           size="medium"
                           sx={{ my: 2, color: "white" }}
-                          href="/"
                         >
-                          Log Out
+                          Sign Out
                         </Button>
                       </Grid>
                     )}
@@ -235,7 +245,9 @@ export default function Navbar(props) {
                             color: "white",
                           }}
                         >
-                          <ShoppingCartOutlinedIcon />
+                          <Badge badgeContent={4} color="secondary">
+                            <ShoppingCartOutlinedIcon />
+                          </Badge>
                         </Button>
                       )}
                     </Grid>
@@ -264,7 +276,9 @@ export default function Navbar(props) {
                     display: { xs: "flex", md: "none" },
                   }}
                 >
-                  <ShoppingCartOutlinedIcon />
+                  <Badge badgeContent={4} color="secondary">
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
                 </Button>
               )}
             </Toolbar>
