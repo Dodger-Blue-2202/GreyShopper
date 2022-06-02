@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { logout, logoutCart } from "../store";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -16,20 +15,11 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
-import { styled, alpha } from "@mui/material/styles";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginOutlined from "@mui/icons-material/LoginOutlined";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -92,7 +82,6 @@ export default function Navbar(props) {
               >
                 GreyShopper
               </Button>
-
               <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
                 <IconButton
                   size="large"
@@ -126,21 +115,30 @@ export default function Navbar(props) {
                     <Typography textAlign="center"> All Products</Typography>
                   </MenuItem>
                   {isLoggedIn ? (
-                    <MenuItem
-                      onClick={() => {
-                        handleCloseNavMenu();
-                        handleClick();
-                      }}
-                    >
-                      Log Out
+                    <MenuItem>
+                      <Button
+                        size="medium"
+                        startIcon={<LogoutOutlined />}
+                        href="/"
+                        onClick={() => {
+                          handleCloseNavMenu();
+                          handleClick();
+                        }}
+                      >
+                        Sign Out
+                      </Button>
                     </MenuItem>
                   ) : (
-                    <MenuItem
-                      component={Link}
-                      to="/login"
-                      onClick={handleCloseNavMenu}
-                    >
-                      Sign In
+                    <MenuItem>
+                      <Button
+                        startIcon={<LoginOutlined />}
+                        size="medium"
+                        disableRipple
+                        href="/"
+                        onClick={handleCloseNavMenu}
+                      >
+                        Sign In
+                      </Button>
                     </MenuItem>
                   )}
                 </Menu>
@@ -180,29 +178,6 @@ export default function Navbar(props) {
                     All Products
                   </Button>
                 </Grid>
-                {/* <Grid item>
-                  <TextField
-                    fullWidth
-                    label="Search"
-                    color="secondary"
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    }
-                    sx={{ my: 1, display: { xs: "none", md: "flex" } }}
-                  />
-                </Grid> */}
-                {/* <Search>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ "aria-label": "search" }}
-                  />
-                </Search> */}
-                {/* <Box sx={{ flexGrow: 1 }} /> */}
                 <Grid item sx={{ flexGrow: 1 }}>
                   <Grid
                     container
@@ -233,34 +208,65 @@ export default function Navbar(props) {
                           onClick={handleClick}
                           size="medium"
                           sx={{ my: 2, color: "white" }}
+                          href="/"
                         >
                           Log Out
                         </Button>
                       </Grid>
                     )}
                     <Grid item>
-                      <Button
-                        aria-label="cart"
-                        href="/cart"
-                        sx={{ my: 2, color: "white" }}
-                      >
-                        <ShoppingCartOutlinedIcon />
-                      </Button>
+                      {isAdmin ? (
+                        <Button
+                          aria-label="admin-settings"
+                          href="/users"
+                          sx={{
+                            my: 2,
+                            color: "white",
+                          }}
+                        >
+                          <SettingsIcon />
+                        </Button>
+                      ) : (
+                        <Button
+                          aria-label="cart"
+                          href="/cart"
+                          sx={{
+                            my: 2,
+                            color: "white",
+                          }}
+                        >
+                          <ShoppingCartOutlinedIcon />
+                        </Button>
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Button
-                aria-label="cart"
-                href="/cart"
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: { xs: "flex", md: "none" },
-                }}
-              >
-                <ShoppingCartOutlinedIcon />
-              </Button>
+              {isAdmin ? (
+                <Button
+                  aria-label="admin-settings"
+                  href="/users"
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: { xs: "flex", md: "none" },
+                  }}
+                >
+                  <SettingsIcon />
+                </Button>
+              ) : (
+                <Button
+                  aria-label="cart"
+                  href="/cart"
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: { xs: "flex", md: "none" },
+                  }}
+                >
+                  <ShoppingCartOutlinedIcon />
+                </Button>
+              )}
             </Toolbar>
           </Container>
         </AppBar>
