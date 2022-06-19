@@ -1,45 +1,67 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
+
+//Material UI Imports
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
-import { useSelector, useDispatch } from "react-redux";
 
-import { fetchProducts } from "../store/productReducer";
-import NewSingleProduct from "./NewSingleProduct";
+//Redux Imports
+import { fetchProducts } from "../store/productsReducer";
+import NewSingleProductCard from "./NewSingleProductCard";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function AllProducts() {
+const NewAllProducts = () => {
   const dispatch = useDispatch();
-  let products = useSelector((state) => state.products);
-  const skelArray = new Array(12);
+  const products = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
-    products = useSelector((state) => state.products);
   }, []);
 
+  console.log("products is", products, products.length);
+
   return (
-    <Container sx={{ height: "100vh" }}>
-      <Paper sx={{ width: "100%", maxWidth: "100%" }}>
-        <Grid container spacing={3}>
-          {products && products.length
+    <Container maxWidth={false}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "100%",
+          marginTop: "10vh",
+          marginBottom: "10vh",
+        }}
+      >
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          sx={{ width: "100%" }}
+        >
+          {products.length
             ? products.map((product, index) => (
-                <Grid item>
-                  <NewSingleProduct key={index} product={product} />
+                <Grid item key={index}>
+                  <NewSingleProductCard product={product} />
                 </Grid>
               ))
-            : skelArray.map((skel, index) => (
-                <Grid item key={index}>
-                  <Skeleton variant="rectangular" width="100%" height="100%" />
-                </Grid>
-              ))}
-          {products.map((product, index) => (
-            <Grid item key={index}>
-              <NewSingleProduct product={product} />
-            </Grid>
-          ))}
+            : Array(12)
+                .fill(1)
+                .map((skel, index) => (
+                  <Grid item key={`${skel}${index}`}>
+                    <Skeleton
+                      variant="rectangular"
+                      width={"20rem"}
+                      height={"25rem"}
+                      animation="wave"
+                      sx={{ borderRadius: 3 }}
+                    />
+                  </Grid>
+                ))}
         </Grid>
-      </Paper>
+      </Box>
     </Container>
   );
-}
+};
+
+export default NewAllProducts;

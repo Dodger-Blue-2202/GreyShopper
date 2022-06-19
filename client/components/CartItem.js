@@ -1,96 +1,146 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
+
+//Material UI Imports
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { Button, CardActionArea, CardActions } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import AddBox from "@mui/icons-material/AddBox";
+import IndeterminateCheckBox from "@mui/icons-material/IndeterminateCheckBox";
+import { DeleteForever } from "@mui/icons-material";
+
+//Redux Imports
+import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, addToCart } from "../store";
 
-class CartItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      quantity: 0,
-    };
-    this.onDelete = this.onDelete.bind(this);
-  }
+const NewCartItem = (props) => {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    this.setState({
-      quantity: this.props.order.quantity,
-    });
-  }
+  const { order, product } = props;
+  const { imageUrl, id, name, price } = product;
 
-  onDelete() {
-    this.props.removeFromCart(this.props.product);
-  }
+  const [quantity, setQuantity] = useState(1);
 
-  render() {
-    const { product, updateOrder } = this.props;
-    return (
-      <div>
-        <Link to={`/products/${product.id}`} className="product-link">
-          <img src={product.imageUrl} />
-        </Link>
-        <h2>{product.name}</h2>
-        <h2>${(product.price / 100).toFixed(2).toLocaleString()}</h2>
-        <div className="cart-quantity-form">
-          <label htmlFor="qty">Quantity: </label>
-          <button
-            type="button"
-            className="decrement"
-            onClick={async () => {
-              await this.setState({
-                quantity: this.state.quantity - 1,
-              });
-              product.totalPrice = Math.floor(
-                product.price * this.state.quantity
-              );
-              updateOrder(product, this.state.quantity);
+  //Update Order Quantity in Database
+  useEffect(() => {
+    if (quantity > 0 && quantity !== order.quantity) {
+      dispatch(addToCart(product, quantity));
+    }
+  }, [quantity]);
+
+  return (
+    <Card
+      sx={{
+        width: "80vw",
+        height: "15vw",
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <CardActionArea href={`/products/${id}`} sx={{ width: "30vw" }}>
+        <CardMedia
+          component="img"
+          height="100%"
+          width="30%"
+          image={imageUrl}
+          alt={name}
+        />
+      </CardActionArea>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <CardContent width="30vw" justifyContent="center" sx={{ margin: "3%" }}>
+          <Box
+            justifyContent="space-between"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
             }}
           >
-            Down
-          </button>
-          <input
-            name="qty"
-            value={this.state.quantity}
-            onChange={async (e) => {
-              await this.setState({
-                quantity: e.target.value,
-              });
-              updateOrder(product, this.state.quantity);
-            }}
-          />
-          <button
-            type="button"
-            className="increment"
-            onClick={async () => {
-              await this.setState({
-                quantity: this.state.quantity + 1,
-              });
-              product.totalPrice = Math.floor(
-                product.price * this.state.quantity
-              );
-              updateOrder(product, this.state.quantity);
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              justifySelf="start"
+            >
+              {name}
+            </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              justifySelf="end"
+            >
+              ${price}
+            </Typography>
+          </Box>
+        </CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            height: "100%",
+            width: "30%",
+            justifyContent: "end",
+          }}
+        >
+          <Box
+            sx={{
+              justifySelf: "end",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Up
-          </button>
-        </div>
-        <button type="button" className="remove" onClick={this.onDelete}>
-          X
-        </button>
-      </div>
-    );
-  }
-}
-
-const mapDispatch = (dispatch) => {
-  return {
-    removeFromCart: (product) => {
-      dispatch(removeFromCart(product));
-    },
-    updateOrder: (product, qty) => {
-      dispatch(addToCart(product, qty));
-    },
-  };
+            <IconButton
+              aria-label="add-one"
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              <AddBox />
+            </IconButton>
+            <Typography variant="h6" component="div">
+              {quantity}
+            </Typography>
+            <IconButton
+              aria-label="remove-one"
+              disabled={quantity <= 1}
+              onClick={() => setQuantity(quantity - 1)}
+            >
+              <IndeterminateCheckBox />
+            </IconButton>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              height: "100%",
+              margin: "5%",
+            }}
+          >
+            <IconButton
+              aria-label="remove"
+              onClick={() => dispatch(removeFromCart(product))}
+            >
+              <DeleteForever />
+            </IconButton>
+          </Box>
+        </Box>
+      </Box>
+    </Card>
+  );
 };
 
-export default connect(null, mapDispatch)(CartItem);
+export default NewCartItem;

@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Home";
-import Products from "./components/Products";
 import SingleProduct from "./components/SingleProduct";
 import Users from "./components/Users";
 import Cart from "./components/Cart";
@@ -13,9 +12,6 @@ import { me } from "./store";
 
 import NewAllProducts from "./components/NewAllProducts";
 
-/**
- * COMPONENT
- */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -28,23 +24,23 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/" component={Home} />
+            <Route path="/home" component={Home} />
             <Route exact path="/products" component={NewAllProducts} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/products/:id" component={SingleProduct} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/edit/:id" component={EditProduct} />
-            <Redirect to="/" />
+            {/* <Redirect to="/" /> */}
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/home" exact component={Home} />
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/products" component={NewAllProducts} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/products/:id" component={SingleProduct} />
-            <Redirect to="/" />
+            {/* <Redirect to="/" /> */}
           </Switch>
         )}
       </div>
