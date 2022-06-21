@@ -13,13 +13,11 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <Provider store={store}>
-        <Router history={history}>
-          <App />
-        </Router>
-      </Provider>
-    </StyledEngineProvider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <Router history={history}>
+      <StyledEngineProvider injectFirst>
+        <App />
+      </StyledEngineProvider>
+    </Router>
+  </Provider>
 );

@@ -15,7 +15,7 @@ import {
 
 //Redux Imports
 import { useDispatch, useSelector } from "react-redux";
-import { checkOut } from "../store";
+import { checkOut, fetchOrders } from "../store";
 
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
@@ -92,6 +92,7 @@ export default function Checkout() {
                     variant="contained"
                     onClick={() => {
                       dispatch(checkOut(order));
+                      dispatch(fetchOrders());
                       handleNext();
                     }}
                     sx={{ mt: 3, ml: 1 }}

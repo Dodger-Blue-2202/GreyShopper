@@ -24,8 +24,6 @@ const AllProducts = () => {
     dispatch(fetchOrders());
   }, []);
 
-  console.log("products is", products, products.length);
-
   return (
     <Container maxWidth={false}>
       <Box

@@ -8,13 +8,18 @@ const theme = createTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#3f51b5",
+      main: "#000000",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: "#f50057",
+      main: "#b7b7b7",
     },
     info: {
       main: "#2196f3",
+    },
+    background: {
+      default: "#d0d0d0",
+      paper: "#f3f3f3",
     },
   },
 });

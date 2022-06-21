@@ -24,12 +24,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchOrders } from "../store";
 
+import { useHistory } from "react-router-dom";
+
 const ProductCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { product } = props;
   const { name, imageUrl, id, description, price } = product;
@@ -158,8 +161,10 @@ const ProductCard = (props) => {
                     <Button
                       size="small"
                       color="primary"
-                      onClick={handleClose}
-                      href={`/products/${id}`}
+                      onClick={() => {
+                        handleClose();
+                        history.push(`/products/${id}`);
+                      }}
                     >
                       Full Details
                     </Button>
@@ -183,7 +188,7 @@ const ProductCard = (props) => {
         </Fade>
       </Modal>
       <Card sx={{ width: "20rem", height: "25rem" }}>
-        <CardActionArea href={`/products/${id}`}>
+        <CardActionArea onClick={() => history.push(`/products/${id}`)}>
           <CardMedia
             component="img"
             height={"30%"}

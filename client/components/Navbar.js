@@ -28,6 +28,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, logoutCart, fetchOrders } from "../store";
 
+import { useHistory } from "react-router-dom";
+
 function ElevationScroll(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({
@@ -53,6 +55,7 @@ export default function Navbar(props) {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchOrders());
@@ -80,7 +83,6 @@ export default function Navbar(props) {
             <Toolbar disableGutters>
               <Button
                 size="medium"
-                href="/"
                 sx={{
                   mr: 2,
                   color: "white",
@@ -91,6 +93,7 @@ export default function Navbar(props) {
                   fontSize: "1.3rem",
                 }}
                 disableRipple
+                onClick={() => history.push("/")}
               >
                 GreyShopper
               </Button>
@@ -123,11 +126,18 @@ export default function Navbar(props) {
                     display: { xs: "block", md: "none" },
                   }}
                 >
-                  <MenuItem onClick={handleCloseNavMenu} href="/products">
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      history.push("/products");
+                    }}
+                  >
                     <Button
                       size="medium"
-                      href="/products"
-                      onClick={handleCloseNavMenu}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                        history.push("/products");
+                      }}
                       disableRipple
                     >
                       All Products
@@ -138,10 +148,10 @@ export default function Navbar(props) {
                       <Button
                         size="medium"
                         startIcon={<LogoutOutlined />}
-                        href="/"
                         onClick={() => {
                           handleCloseNavMenu();
                           handleClick();
+                          history.push("/");
                         }}
                       >
                         Sign Out
@@ -153,8 +163,10 @@ export default function Navbar(props) {
                         startIcon={<LoginOutlined />}
                         size="medium"
                         disableRipple
-                        href="/signin"
-                        onClick={handleCloseNavMenu}
+                        onClick={() => {
+                          handleCloseNavMenu();
+                          history.push("/signin");
+                        }}
                       >
                         Sign In
                       </Button>
@@ -164,7 +176,6 @@ export default function Navbar(props) {
               </Box>
               <Button
                 size="medium"
-                href="/"
                 sx={{
                   mr: 5,
                   color: "white",
@@ -175,6 +186,7 @@ export default function Navbar(props) {
                   fontSize: "1.3rem",
                 }}
                 disableRipple
+                onClick={() => history.push("/")}
               >
                 GS
               </Button>
@@ -190,10 +202,12 @@ export default function Navbar(props) {
               >
                 <Grid item>
                   <Button
-                    onClick={handleCloseNavMenu}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      history.push("/products");
+                    }}
                     size="medium"
                     sx={{ my: 2, color: "white" }}
-                    href="/products"
                   >
                     All Products
                   </Button>
@@ -213,8 +227,10 @@ export default function Navbar(props) {
                           color="secondary"
                           startIcon={<LoginOutlined />}
                           size="medium"
-                          href="/signin"
-                          sx={{ my: 2, color: "white" }}
+                          sx={{ my: 2, color: "black" }}
+                          onClick={() => {
+                            history.push("/signin");
+                          }}
                         >
                           Sign In
                         </Button>
@@ -225,72 +241,119 @@ export default function Navbar(props) {
                           variant="contained"
                           color="secondary"
                           endIcon={<LogoutOutlined />}
-                          href="/"
-                          onClick={handleClick}
+                          onClick={() => {
+                            handleClick();
+                            history.push("/");
+                          }}
                           size="medium"
-                          sx={{ my: 2, color: "white" }}
+                          sx={{ my: 2, color: "black" }}
                         >
                           Sign Out
                         </Button>
                       </Grid>
                     )}
                     <Grid item>
-                      {isAdmin ? (
+                      {isLoggedIn ? (
                         <Button
-                          aria-label="admin-settings"
-                          href="/users"
+                          aria-label="cart"
                           sx={{
                             my: 2,
                             color: "white",
                           }}
-                        >
-                          <SettingsIcon />
-                        </Button>
-                      ) : (
-                        <Button
-                          aria-label="cart"
-                          href="/cart"
-                          sx={{
-                            my: 2,
-                            color: "white",
+                          onClick={() => {
+                            history.push("/cart");
+                            dispatch(fetchOrders());
                           }}
                         >
                           <Badge badgeContent={quantity} color="secondary">
                             <ShoppingCartOutlinedIcon />
                           </Badge>
                         </Button>
+                      ) : (
+                        ""
                       )}
+                      {/* {isAdmin ? (
+                        <Button
+                          aria-label="admin-settings"
+                          sx={{
+                            my: 2,
+                            color: "white",
+                          }}
+                          onClick={() => history.push("/users")}
+                        >
+                          <SettingsIcon />
+                        </Button>
+                      ) : (
+                        <Button
+                          aria-label="cart"
+                          sx={{
+                            my: 2,
+                            color: "white",
+                          }}
+                          onClick={() => {
+                            history.push("/cart");
+                            dispatch(fetchOrders());
+                          }}
+                        >
+                          <Badge badgeContent={quantity} color="secondary">
+                            <ShoppingCartOutlinedIcon />
+                          </Badge>
+                        </Button>
+                      )} */}
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              {isAdmin ? (
+              {isLoggedIn ? (
                 <Button
-                  aria-label="admin-settings"
-                  href="/users"
+                  aria-label="cart"
                   sx={{
                     my: 2,
                     color: "white",
                     display: { xs: "flex", md: "none" },
                   }}
-                >
-                  <SettingsIcon />
-                </Button>
-              ) : (
-                <Button
-                  aria-label="cart"
-                  href="/cart"
-                  sx={{
-                    my: 2,
-                    color: "white",
-                    display: { xs: "flex", md: "none" },
+                  onClick={() => {
+                    history.push("/cart");
+                    dispatch(fetchOrders());
                   }}
                 >
                   <Badge badgeContent={quantity} color="secondary">
                     <ShoppingCartOutlinedIcon />
                   </Badge>
                 </Button>
+              ) : (
+                ""
               )}
+              {/* {isAdmin ? (
+                <Button
+                  aria-label="admin-settings"
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: { xs: "flex", md: "none" },
+                  }}
+                  onClick={() => history.push("/users")}
+                >
+                  <SettingsIcon />
+                </Button>
+              ) : (
+                <Button
+                  aria-label="cart"
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: { xs: "flex", md: "none" },
+                  }}
+                  onClick={() => {
+                    history.push("/cart");
+                    dispatch(fetchOrders());
+                  }}
+                >
+                  <Badge badgeContent={quantity} color="secondary">
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
+                </Button>
+              )} */}
             </Toolbar>
           </Container>
         </AppBar>

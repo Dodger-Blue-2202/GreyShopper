@@ -19,10 +19,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { authenticate } from "../store";
 
+import { useHistory } from "react-router-dom";
+
 export default function SignUp() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const error = useSelector((state) => state.auth.error);
+
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -90,7 +94,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="center ">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link variant="body2" onClick={() => history.push("/signin")}>
                 {"Already have an account? Sign In."}
               </Link>
             </Grid>

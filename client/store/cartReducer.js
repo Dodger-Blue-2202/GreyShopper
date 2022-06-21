@@ -8,6 +8,7 @@
 
 import axios from "axios";
 import { setError } from "./errorReducer";
+import { setFetched } from "./infoReducer";
 import history from "../history";
 
 const TOKEN = "token";
@@ -37,6 +38,7 @@ export const fetchOrders = () => async (dispatch) => {
       //returns all orders if we have admin access
       res.data.sort((a, b) => a.productId - b.productId);
       dispatch(setOrder(res.data));
+      dispatch(setFetched());
     } catch (err) {
       dispatch(setError("Error getting order data."));
     }
@@ -57,6 +59,7 @@ export const removeFromCart = (product) => async (dispatch) => {
     }
   }
   dispatch(removeFromOrder(product));
+  dispatch(setFetched());
 };
 
 export const addToCart = (product, quantity) => async (dispatch) => {
@@ -74,6 +77,7 @@ export const addToCart = (product, quantity) => async (dispatch) => {
   }
   dispatch(addToOrder({ product, quantity }));
   dispatch(fetchOrders());
+  dispatch(setFetched());
 };
 
 export const checkOut = (order) => async (dispatch) => {
@@ -102,6 +106,7 @@ export const checkOut = (order) => async (dispatch) => {
       //   return !order;
       // });
       dispatch(fetchOrders()); //clears cart to set up new order
+      dispatch(setFetched());
     } catch (err) {
       dispatch(setError("Error completing checkout"));
     }

@@ -6,7 +6,6 @@ const SET_PRODUCT = "SET_PRODUCT";
 const setProduct = (product) => ({ type: SET_PRODUCT, product });
 
 export const fetchSingleProduct = (id) => async (dispatch) => {
-  console.log("dispatched");
   try {
     const res = await axios.get(`/api/products/${id}`);
     dispatch(setProduct(res.data));
