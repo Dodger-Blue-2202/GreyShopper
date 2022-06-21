@@ -3,22 +3,25 @@ import React, { useEffect } from "react";
 
 //Material UI Imports
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 
 //Redux Imports
 import { fetchProducts } from "../store/productsReducer";
-import NewSingleProductCard from "./NewSingleProductCard";
+import { fetchOrders } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 
-const NewAllProducts = () => {
+import ProductCard from "./ProductCard";
+
+const AllProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const orders = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchOrders());
   }, []);
 
   console.log("products is", products, products.length);
@@ -42,7 +45,7 @@ const NewAllProducts = () => {
           {products.length
             ? products.map((product, index) => (
                 <Grid item key={index}>
-                  <NewSingleProductCard product={product} />
+                  <ProductCard product={product} orders={orders} />
                 </Grid>
               ))
             : Array(12)
@@ -64,4 +67,4 @@ const NewAllProducts = () => {
   );
 };
 
-export default NewAllProducts;
+export default AllProducts;

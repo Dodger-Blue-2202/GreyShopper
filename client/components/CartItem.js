@@ -1,21 +1,22 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 //Material UI Imports
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AddBox from "@mui/icons-material/AddBox";
 import IndeterminateCheckBox from "@mui/icons-material/IndeterminateCheckBox";
 import { DeleteForever } from "@mui/icons-material";
 
 //Redux Imports
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeFromCart, addToCart } from "../store";
 
 const NewCartItem = (props) => {
@@ -23,26 +24,18 @@ const NewCartItem = (props) => {
 
   const { order, product } = props;
   const { imageUrl, id, name, price } = product;
-
-  const [quantity, setQuantity] = useState(1);
-
-  //Update Order Quantity in Database
-  useEffect(() => {
-    if (quantity > 0 && quantity !== order.quantity) {
-      dispatch(addToCart(product, quantity));
-    }
-  }, [quantity]);
+  const [quantity, setQuantity] = useState(order.quantity);
 
   return (
     <Card
       sx={{
-        width: "80vw",
-        height: "15vw",
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "row",
       }}
     >
-      <CardActionArea href={`/products/${id}`} sx={{ width: "30vw" }}>
+      <CardActionArea href={`/products/${id}`} sx={{ width: "30%" }}>
         <CardMedia
           component="img"
           height="100%"
@@ -59,7 +52,7 @@ const NewCartItem = (props) => {
           width: "100%",
         }}
       >
-        <CardContent width="30vw" justifyContent="center" sx={{ margin: "3%" }}>
+        <CardContent width="30%" sx={{ margin: "3%" }}>
           <Box
             justifyContent="space-between"
             sx={{
@@ -106,7 +99,10 @@ const NewCartItem = (props) => {
           >
             <IconButton
               aria-label="add-one"
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={() => {
+                setQuantity(quantity + 1);
+                dispatch(addToCart(product, quantity + 1));
+              }}
             >
               <AddBox />
             </IconButton>
@@ -116,7 +112,10 @@ const NewCartItem = (props) => {
             <IconButton
               aria-label="remove-one"
               disabled={quantity <= 1}
-              onClick={() => setQuantity(quantity - 1)}
+              onClick={() => {
+                setQuantity(quantity - 1);
+                dispatch(addToCart(product, quantity - 1));
+              }}
             >
               <IndeterminateCheckBox />
             </IconButton>

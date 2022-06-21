@@ -1,7 +1,7 @@
 import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import Navbar from "./components/Newnav";
+import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 
 const theme = createTheme({

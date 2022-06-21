@@ -1,34 +1,206 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
+
+//Material UI Imports
+import {
+  Container,
+  Box,
+  Card,
+  CardMedia,
+  Typography,
+  Grid,
+  Skeleton,
+  Button,
+} from "@mui/material";
 
 //Redux Imports
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProduct } from "../store/productReducer";
 import { deleteProduct, putProduct, addToCart } from "../store";
-import { addToCart } from "../store";
-
-//Material UI Imports
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import { Button, CardActionArea, CardActions } from "@mui/material";
 
 import { useParams } from "react-router-dom";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
+  const product = useSelector((state) => state.product);
 
-  const id = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchSingleProduct(id));
   }, []);
 
-  return <Container></Container>;
+  return (
+    <Container maxWidth={false}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "80vh",
+          maxWidth: "100%",
+          marginTop: "5vh",
+          marginBottom: "5vh",
+        }}
+      >
+        <Grid
+          container
+          spacing={2}
+          justifyContent="space-around"
+          sx={{ width: "100%", height: "100%" }}
+        >
+          <Grid
+            item
+            width="40%"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {product.name ? (
+              <Card sx={{ width: "80%", height: "80%" }}>
+                <CardMedia
+                  component="img"
+                  height={"100%"}
+                  image={product.imageUrl}
+                  alt={product.name}
+                />
+              </Card>
+            ) : (
+              <Skeleton
+                variant="rectangular"
+                width="80%"
+                height="80%"
+                animation="wave"
+                sx={{ borderRadius: 3 }}
+              />
+            )}
+          </Grid>
+          <Grid
+            item
+            width="40%"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <Grid
+              container
+              spacing={2}
+              justifyContent="center"
+              alignItems="start"
+              direction="column"
+              sx={{ width: "100%", height: "100%" }}
+            >
+              <Grid
+                item
+                width="100%"
+                height="20%"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {product.name ? (
+                  <Typography variant="h4" gutterBottom>
+                    {product.name}
+                  </Typography>
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height="50%"
+                    animation="wave"
+                    sx={{ borderRadius: 3 }}
+                  />
+                )}
+              </Grid>
+              <Grid
+                item
+                width="100%"
+                height="20%"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {product.name ? (
+                  <Typography variant="h5" gutterBottom>
+                    ${product.price}
+                  </Typography>
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    width="50%"
+                    height="50%"
+                    animation="wave"
+                    sx={{ borderRadius: 3 }}
+                  />
+                )}
+              </Grid>
+              <Grid
+                item
+                width="100%"
+                height="20%"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {product.name ? (
+                  <Typography variant="h6" gutterBottom>
+                    {product.description}
+                  </Typography>
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height="75%"
+                    animation="wave"
+                    sx={{ borderRadius: 3 }}
+                  />
+                )}
+              </Grid>
+              <Grid
+                item
+                width="100%"
+                height="20%"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                {product.name ? (
+                  <Button
+                    size="large"
+                    variant="contained"
+                    onClick={() => dispatch(addToCart(product, 1))}
+                  >
+                    Add to Cart
+                  </Button>
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height="50%"
+                    animation="wave"
+                    sx={{ borderRadius: 3 }}
+                  />
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
+  );
 };
+
+export default SingleProduct;
 // export class SingleProduct extends React.Component {
 //   componentDidMount() {
 //     this.props.fetchSingleProduct(this.props.match.params.id);

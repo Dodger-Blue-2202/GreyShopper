@@ -35,6 +35,7 @@ export const fetchOrders = () => async (dispatch) => {
         headers: { authorization: token },
       });
       //returns all orders if we have admin access
+      res.data.sort((a, b) => a.productId - b.productId);
       dispatch(setOrder(res.data));
     } catch (err) {
       dispatch(setError("Error getting order data."));
@@ -50,9 +51,9 @@ export const removeFromCart = (product) => async (dispatch) => {
         data: product,
         headers: { authorization: token },
       });
-    //update store
+      //update store
     } catch (err) {
-    dispatch(setError("There was an error removing from cart"));
+      dispatch(setError("There was an error removing from cart"));
     }
   }
   dispatch(removeFromOrder(product));
@@ -66,37 +67,44 @@ export const addToCart = (product, quantity) => async (dispatch) => {
         data: { product, quantity },
         headers: { authorization: token },
       });
-    //update store
+      //update store
     } catch (err) {
-    dispatch(setError("There was an error adding to cart"));
+      dispatch(setError("There was an error adding to cart"));
     }
   }
-    dispatch(addToOrder({ product, quantity }));
-
+  dispatch(addToOrder({ product, quantity }));
+  dispatch(fetchOrders());
 };
 
 export const checkOut = (order) => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   //VERIFY AUTHORIZATION WITH TOKEN
-  if (token){try {
-    let completedOrders = await axios.put(`/api/orders/checkout`,{
-      data: order,
-    },{
-      headers: { authorization: token },
-    },); // if token exists in authorization then checkout order by setting isCart to false identified by token
-    //Otherwise create an order and add that to order db with null user and checkout
-    //then we want to create a new order to fill
-    if (!completedOrders.data.includes(null)){
-      alert("All Orders succesfully completed")
-    }else{
-      alert("At least one order not successfully completed.")
+  if (token) {
+    try {
+      let completedOrders = await axios.put(
+        `/api/orders/checkout`,
+        {
+          data: order,
+        },
+        {
+          headers: { authorization: token },
+        }
+      ); // if token exists in authorization then checkout order by setting isCart to false identified by token
+      //Otherwise create an order and add that to order db with null user and checkout
+      //then we want to create a new order to fill
+      if (!completedOrders.data.includes(null)) {
+        alert("All Orders succesfully completed");
+      } else {
+        alert("At least one order not successfully completed.");
+      }
+      let uncompleted = completedOrders.data.filter((order) => {
+        return !order;
+      });
+      dispatch(fetchOrders()); //clears cart to set up new order
+    } catch (err) {
+      dispatch(setError("Error completing checkout"));
     }
-    let uncompleted = completedOrders.data.filter((order)=>{return !order})
-    dispatch(fetchOrders()); //clears cart to set up new order
-  } catch (err) {
-    dispatch(setError("Error completing checkout")
-    );
-  }}else{
+  } else {
     //non logged in user must create orders and add to db even without username
   }
 };

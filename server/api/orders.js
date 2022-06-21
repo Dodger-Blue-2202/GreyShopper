@@ -35,7 +35,7 @@ router.post("/products", async (req, res, next) => {
     });
     if (!order) {
       order = await Order.create();
-      user.addOrder(order)
+      user.addOrder(order);
     }
     let qty = req.body.data.quantity || 1;
     await product.addOrder(order, {
@@ -73,33 +73,36 @@ router.delete("/products", async (req, res, next) => {
 });
 
 //checkout an order- change isCart on Object model and subtract Quantity from Product table
-router.put("/checkout", async(req,res,next)=>{
-  if(req.headers.authorization){
+router.put("/checkout", async (req, res, next) => {
+  if (req.headers.authorization) {
     try {
       let user = await User.findByToken(req.headers.authorization);
-      let orders = await Order_Product.findAll(
-      {
+      let orders = await Order_Product.findAll({
         include: [
           { model: Order, where: { userId: user.id } },
-          { model: Product},
+          { model: Product },
         ],
         where: { isCart: true },
-      }); 
-      let msg  =await Promise.all( orders.map(async (order)=> { 
-        if (order.quantity<=order.product.stock) {
-          let product = await Product.findOne({where:{id:order.product.id}})
-          await product.decrement('stock',{by:order.quantity})
-          let output = await order.update({isCart:false}); 
-        return output
-        }
-      }))
-      res.status(201).send(msg)
+      });
+      let msg = await Promise.all(
+        orders.map(async (order) => {
+          if (order.quantity <= order.product.stock) {
+            let product = await Product.findOne({
+              where: { id: order.product.id },
+            });
+            await product.decrement("stock", { by: order.quantity });
+            let output = await order.update({ isCart: false });
+            return output;
+          }
+        })
+      );
+      res.status(201).send(msg);
     } catch (error) {
-      next(error)
+      next(error);
     }
-  } else{
-    //if not logged in then 
+  } else {
+    //if not logged in then
     let orders = req.body;
-    console.log(orders)
+    console.log(orders);
   }
-})
+});

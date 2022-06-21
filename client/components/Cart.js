@@ -1,30 +1,49 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //Material UI Imports
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Skeleton from "@mui/material/Skeleton";
+import {
+  Container,
+  Box,
+  Grid,
+  Skeleton,
+  Card,
+  Typography,
+  Button,
+} from "@mui/material";
 
 //Redux Imports
 import { useDispatch, useSelector } from "react-redux";
-import NewCartItem from "./CartItem";
 import { fetchOrders, checkOut } from "../store";
+
+//Child Imports
+import NewCartItem from "./CartItem";
 
 const NewCartPage = () => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.cart);
+  const [quantity, setQuantity] = useState(
+    orders.reduce((total, order) => total + order.quantity, 0)
+  );
+  const [price, setPrice] = useState(
+    orders.reduce((total, order) => total + order.total_price, 0)
+  );
 
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
-  console.log("orders", orders);
+
+  useEffect(() => {
+    setQuantity(orders.reduce((total, order) => total + order.quantity, 0));
+    setPrice(orders.reduce((total, order) => total + order.total_price, 0));
+  }, [orders]);
+
   return (
-    <Container maxWidth={false}>
+    <Container maxWidth="100vw">
       <Box
         sx={{
           width: "100%",
+          height: "100%",
           maxWidth: "100%",
           marginTop: "10vh",
           marginBottom: "10vh",
@@ -32,29 +51,109 @@ const NewCartPage = () => {
       >
         <Grid
           container
+          direction="row"
           spacing={2}
-          justifyContent="center"
-          sx={{ width: "100%" }}
+          justifyContent="space-between"
+          sx={{ width: "98vw" }}
         >
-          {orders.length
-            ? orders.map((order, index) => (
-                <Grid item key={index}>
-                  <NewCartItem order={order} product={order.product} />
-                </Grid>
-              ))
-            : Array(3)
-                .fill(1)
-                .map((skel, index) => (
-                  <Grid item key={`${index}`}>
-                    <Skeleton
-                      variant="rectangular"
-                      width={"80vw"}
-                      height={"15vw"}
-                      animation="wave"
-                      sx={{ borderRadius: 3 }}
-                    />
+          <Grid item sx={{ height: "100%", width: "60%" }}>
+            <Grid
+              container
+              direction="column"
+              spacing={2}
+              justifyContent="start"
+              sx={{ height: "100%", width: "100%" }}
+            >
+              {orders.length
+                ? orders.map((order, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      sx={{ width: "100%", height: "25%" }}
+                    >
+                      <NewCartItem order={order} product={order.product} />
+                    </Grid>
+                  ))
+                : Array(3)
+                    .fill(1)
+                    .map((skel, index) => (
+                      <Grid item key={`${index}`}>
+                        <Skeleton
+                          variant="rectangular"
+                          width="55vw"
+                          height="20vh"
+                          animation="wave"
+                          sx={{ borderRadius: 3 }}
+                        />
+                      </Grid>
+                    ))}
+            </Grid>
+          </Grid>
+          <Grid item sx={{ height: "50vh", width: "37%" }}>
+            {orders.length ? (
+              <Card sx={{ width: "100%", height: "100%" }}>
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  sx={{ width: "100%", height: "100%" }}
+                >
+                  <Grid item>
+                    <Button variant="contained" size="large">
+                      Continue to Checkout
+                    </Button>
                   </Grid>
-                ))}
+                  <Grid item sx={{ width: "90%" }}>
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <Typography variant="h5" gutterBottom>
+                          Total Items:
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="h5" gutterBottom>
+                          {quantity}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item sx={{ width: "90%" }}>
+                    <Grid
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Grid item>
+                        <Typography variant="h5" gutterBottom>
+                          Subtotal:
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography variant="h5" gutterBottom>
+                          ${price}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Card>
+            ) : (
+              <Skeleton
+                variant="rectangular"
+                width={"100%"}
+                height={"100%"}
+                animation="wave"
+                sx={{ borderRadius: 3 }}
+              />
+            )}
+          </Grid>
         </Grid>
       </Box>
     </Container>
