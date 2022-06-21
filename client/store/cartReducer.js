@@ -92,14 +92,15 @@ export const checkOut = (order) => async (dispatch) => {
       ); // if token exists in authorization then checkout order by setting isCart to false identified by token
       //Otherwise create an order and add that to order db with null user and checkout
       //then we want to create a new order to fill
-      if (!completedOrders.data.includes(null)) {
-        alert("All Orders succesfully completed");
-      } else {
-        alert("At least one order not successfully completed.");
-      }
-      let uncompleted = completedOrders.data.filter((order) => {
-        return !order;
-      });
+
+      // if (!completedOrders.data.includes(null)) {
+      //   alert("All Orders succesfully completed");
+      // } else {
+      //   alert("At least one order not successfully completed.");
+      // }
+      // let uncompleted = completedOrders.data.filter((order) => {
+      //   return !order;
+      // });
       dispatch(fetchOrders()); //clears cart to set up new order
     } catch (err) {
       dispatch(setError("Error completing checkout"));

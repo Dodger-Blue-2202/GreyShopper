@@ -14,7 +14,7 @@ import {
 
 //Redux Imports
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrders, checkOut } from "../store";
+import { fetchOrders } from "../store";
 
 //Child Imports
 import NewCartItem from "./CartItem";
@@ -100,7 +100,7 @@ const NewCartPage = () => {
                   sx={{ width: "100%", height: "100%" }}
                 >
                   <Grid item>
-                    <Button variant="contained" size="large">
+                    <Button variant="contained" size="large" href="/checkout">
                       Continue to Checkout
                     </Button>
                   </Grid>

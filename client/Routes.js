@@ -9,8 +9,8 @@ import EditProduct from "./components/EditProduct";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import { me } from "./store";
-
-import NewAllProducts from "./components/AllProducts";
+import Checkout from "./components/Checkout";
+import AllProducts from "./components/AllProducts";
 
 class Routes extends Component {
   componentDidMount() {
@@ -25,11 +25,12 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Route exact path="/products" component={NewAllProducts} />
+            <Route exact path="/products" component={AllProducts} />
             <Route exact path="/users" component={Users} />
             <Route exact path="/products/:id" component={SingleProduct} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/edit/:id" component={EditProduct} />
+            <Route exact path="/checkout" component={Checkout} />
             <Redirect to="/" />
           </Switch>
         ) : (
@@ -37,9 +38,10 @@ class Routes extends Component {
             <Route path="/home" exact component={Home} />
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
-            <Route exact path="/products" component={NewAllProducts} />
+            <Route exact path="/products" component={AllProducts} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/products/:id" component={SingleProduct} />
+            <Route exact path="/checkout" component={Checkout} />
             <Redirect to="/" />
           </Switch>
         )}
