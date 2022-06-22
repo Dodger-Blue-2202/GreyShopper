@@ -26,7 +26,7 @@ _</b> Add pics here after styling_ </b>
 
 ## Deployed Site GreyShopper:
 
-Check out GreyShopper <a href="https://dashboard.heroku.com/apps/dodgerblue-graceshopper">here</a>!
+Check out GreyShopper <a href="https://dodgerblue-graceshopper.herokuapp.com">here</a>!
 
 ## Prerequisites and installation:
 
