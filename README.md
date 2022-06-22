@@ -17,8 +17,6 @@ GreyShopper is an online e-commerce application built on React, with Redux for s
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
 
-_</b> Add pics here after styling_ </b>
-
 <p align='center'/>
 <img style="max-width:800px" src="https://imgur.com/QX8As8z.png"/>
 <p align='center'>Home Page</p>
