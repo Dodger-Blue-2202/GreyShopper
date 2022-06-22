@@ -188,10 +188,13 @@ const ProductCard = (props) => {
         </Fade>
       </Modal>
       <Card sx={{ width: "20rem", height: "25rem" }}>
-        <CardActionArea onClick={() => history.push(`/products/${id}`)}>
+        <CardActionArea
+          onClick={() => history.push(`/products/${id}`)}
+          sx={{ height: "87%" }}
+        >
           <CardMedia
             component="img"
-            height={"30%"}
+            height={"80%"}
             image={imageUrl}
             alt={name}
           />

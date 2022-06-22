@@ -1,11 +1,4 @@
-# Grace Shopper
-
-<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
-
-![GitHub contributors](https://img.shields.io/github/contributors/nicolerae/README-templateFSA.md)
-![GitHub stars](https://img.shields.io/github/stars/nicolerae/README-templateFSA.md?style=social)
-![GitHub forks](https://img.shields.io/github/forks/nicolerae/README-templateFSA.md?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/nicole_rae?style=social)
+# GreyShopper
 
 <!-- PROJECT LOGO -->
 <br />
@@ -14,24 +7,49 @@
     <img src="https://media.glassdoor.com/sqll/980700/fullstack-academy-squareLogo-1634676275302.png" alt="Logo" width="100" height="100">
   </a>
 
-  <h3 align="center">Graceshopper</h3>
+  <h3 align="center">GreyShopper</h3>
 
   <p align="center">
-    An online e-commerce platform specializing in gag and comedy items.
+    An online e-commerce platform specializing in all things grey.
     <br />
 
-Graceshopper is an online e-commerce application built on React. From raw, unprocessed coffee beans to magic spoons, find all your special comedic needs on Graceshopper!
+GreyShopper is an online e-commerce application built on React, with Redux for state management and Material UI for styling.
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
 
 _</b> Add pics here after styling_ </b>
 
-<p align=‘center’/>
-<p align='center'><a href="https://www.loom.com/share/04d6c8482c7341fb9b423d10f0bea30b"> <img style="max-width:300px" src="https://cdn.loom.com/sessions/thumbnails/04d6c8482c7341fb9b423d10f0bea30b-with-play.gif"> </br> <p align='center'> Watch Video</p> </a> </p>
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/QX8As8z"/>
+<p align='center'>Home Page</p>
 
-## Deployed Site Graceshopper:
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/WOUnYaD"/>
+<p align='center'>All Products Page</p>
 
-Check out Graceshopper <a href="https://dashboard.heroku.com/apps/dodgerblue-graceshopper">here</a>!
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/Hif1WUY"/>
+<p align='center'>Single Product Page</p>
+
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/vP4mIug"/>
+<p align='center'>Sign In Page</p>
+
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/MS3ABtI"/>
+<p align='center'>Cart Page</p>
+
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/87PxjXx"/>
+<p align='center'>Checkout Page 1</p>
+
+<p align='center'/>
+<img style="max-width:800px" src="https://imgur.com/wAwdzf7"/>
+<p align='center'>Checkout Page 2</p>
+
+## Deployed Site GreyShopper:
+
+Check out GreyShopper <a href="https://greyshopper.herokuapp.com">here</a>!
 
 ## Prerequisites and installation:
 
@@ -40,24 +58,24 @@ Before you begin, ensure you have met the following requirements:
 - You have installed the latest version of node
 - You have a Windows/Linux/Mac machine.
 
-## Installing Graceshopper:
+## Installing GreyShopper:
 
-To install Graceshopper, follow these steps:
+To install GreyShopper, follow these steps:
 
 - Fork this repository
 
 Linux and macOS:
 
 ```
-git clone git@github.com:Dodger-Blue-2202/graceshopper.git
-cd graceshopper
+git clone git@github.com:Dodger-Blue-2202/GreyShopper.git
+cd greyshopper
 npm install
-createdb graceshopper
+createdb greyshopper
 ```
 
 ## Contributors/Collaborators:
 
-Check out the team behind Graceshopper:
+Check out the team behind GreyShopper:
 
 - [Parry Tu Github](https://github.com/ParryTu) [Linkedin](http://linkedin.com/in/parryt/)
 - [Mike LeBegue ](https://github.com/MikeLeBe19)[Linkedin](https://www.linkedin.com/in/mike-lebegue/)
