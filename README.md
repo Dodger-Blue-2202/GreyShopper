@@ -20,31 +20,31 @@ GreyShopper is an online e-commerce application built on React, with Redux for s
 _</b> Add pics here after styling_ </b>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/QX8As8z"/>
+<img style="max-width:800px" src="https://imgur.com/QX8As8z.png"/>
 <p align='center'>Home Page</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/WOUnYaD"/>
+<img style="max-width:800px" src="https://imgur.com/WOUnYaD.png"/>
 <p align='center'>All Products Page</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/Hif1WUY"/>
+<img style="max-width:800px" src="https://imgur.com/Hif1WUY.png"/>
 <p align='center'>Single Product Page</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/vP4mIug"/>
+<img style="max-width:800px" src="https://imgur.com/vP4mIug.png"/>
 <p align='center'>Sign In Page</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/MS3ABtI"/>
+<img style="max-width:800px" src="https://imgur.com/MS3ABtI.png"/>
 <p align='center'>Cart Page</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/87PxjXx"/>
+<img style="max-width:800px" src="https://imgur.com/87PxjXx.png"/>
 <p align='center'>Checkout Page 1</p>
 
 <p align='center'/>
-<img style="max-width:800px" src="https://imgur.com/wAwdzf7"/>
+<img style="max-width:800px" src="https://imgur.com/wAwdzf7.png"/>
 <p align='center'>Checkout Page 2</p>
 
 ## Deployed Site GreyShopper:
